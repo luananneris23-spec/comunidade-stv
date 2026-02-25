@@ -129,17 +129,18 @@ ESTILO DE RESPOSTA:
 // Para produção, use uma variável de ambiente — nunca exponha a chave publicamente
 async function callAI(systemPrompt, userPrompt) {
   const res = await fetch("/api/chat", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    messages: [
-      { role: "system", content: systemPrompt },
-      { role: "user", content: userPrompt }
-    ]
-  })
-});
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt }
+      ]
+    })
+  });
+
   if (!res.ok) {
     const err = await res.json().catch(() => ({
       error: { message: res.statusText }
@@ -150,20 +151,6 @@ async function callAI(systemPrompt, userPrompt) {
   const data = await res.json();
   return data.choices?.[0]?.message?.content || "";
 }
-}
-        { role: "system", content: systemPrompt },
-        { role: "user",   content: userPrompt }
-      ]
-    })
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({ error: { message: res.statusText } }));
-    throw new Error(err?.error?.message || "Erro na API OpenAI");
-  }
-  const data = await res.json();
-  return data.choices?.[0]?.message?.content || "";
-}
-
 function parseJSON(txt) {
   try {
     const clean = txt.replace(/```json|```/g,"").trim();
