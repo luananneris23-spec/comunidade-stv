@@ -128,33 +128,18 @@ ESTILO DE RESPOSTA:
 // IMPORTANTE: Substitua pela sua chave em https://platform.openai.com/api-keys
 // Para produção, use uma variável de ambiente — nunca exponha a chave publicamente
 async function callAI(systemPrompt, userPrompt) {
-  const response = await fetch("/api/chat", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: userPrompt }
-      ]
-    })
-  });
-
-  const data = await response.json();
-  return data.choices[0].message.content;
-}
-{
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: userPrompt }
-      ]
-    })
-  });
-
+  const res = await fetch("/api/chat", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    messages: [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: userPrompt }
+    ]
+  })
+});
   if (!res.ok) {
     const err = await res.json().catch(() => ({
       error: { message: res.statusText }
