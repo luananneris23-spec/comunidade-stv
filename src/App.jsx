@@ -145,10 +145,6 @@ async function callAI(systemPrompt, userPrompt) {
   return data.choices[0].message.content;
 }
 {
- async function callAI(systemPrompt, userPrompt) {
-  const response = await fetch("/api/chat", {
-    method: "POST",
-    headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
@@ -159,8 +155,16 @@ async function callAI(systemPrompt, userPrompt) {
     })
   });
 
-  const data = await response.json();
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({
+      error: { message: res.statusText }
+    }));
+    throw new Error(err?.error?.message || "Erro na API");
+  }
+
+  const data = await res.json();
   return data.choices?.[0]?.message?.content || "";
+}
 }
         { role: "system", content: systemPrompt },
         { role: "user",   content: userPrompt }
