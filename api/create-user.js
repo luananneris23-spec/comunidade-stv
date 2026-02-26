@@ -2,7 +2,7 @@
 # ContextLines: 1
 
 No Results
-const { createClient } = require("@supabase/supabase-js");
+const { createClient } = import("@supabase/supabase-js");
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
