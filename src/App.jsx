@@ -338,6 +338,13 @@ await fetch("/api/create-user", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify(novoUsuario)
+})
+.then(res => res.json())
+.then(data => {
+  console.log("RESPOSTA API:", data);
+})
+.catch(err => {
+  console.error("ERRO API:", err);
 });}
   const remover=id=>{if(!confirm("Remover membro?"))return;sync(u=>u.filter(x=>x.id!==id));localStorage.removeItem("stv_d_"+id);};
   const renovar=(id,dias)=>sync(u=>u.map(x=>{if(x.id!==id)return x;const exp=new Date();exp.setDate(exp.getDate()+dias);return{...x,exp:exp.toISOString()};}));
