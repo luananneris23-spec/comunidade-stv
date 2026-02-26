@@ -270,7 +270,7 @@ body{background-color:#c0d8f0;background-image:linear-gradient(45deg,#b0cce8 25%
 // ─── GATE ─────────────────────────────────────────────────────────────────────
 function Gate({ onLogin }) {
   const [pw,setPw]=useState(""); const [err,setErr]=useState("");
-  const login=()=>{
+  const login = async () => {
     if(pw===ADMIN_PWD){const s={role:"admin"};saveSession(s);onLogin(s);return;}
     const response = await fetch("/api/login", {
   method: "POST",
