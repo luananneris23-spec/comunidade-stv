@@ -272,7 +272,21 @@ function Gate({ onLogin }) {
   const [pw,setPw]=useState(""); const [err,setErr]=useState("");
   const login=()=>{
     if(pw===ADMIN_PWD){const s={role:"admin"};saveSession(s);onLogin(s);return;}
-    const users=getUsers(); const user=users.find(u=>u.senha===pw);
+    const response = await fetch("/api/login", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ password: pw })
+});
+
+const data = await response.json();
+
+if (!response.ok) {
+  setErr(data.error);
+  return;
+}
+
+saveSession(data);
+onLogin(data);
     if(!user){setErr("Senha incorreta. Verifique com quem te enviou o acesso.");return;}
     if(new Date()>new Date(user.exp)){setErr("Seu acesso expirou. Entre em contato com o administrador.");return;}
     const s={role:"user",userId:user.id,nome:user.nome,exp:user.exp};
