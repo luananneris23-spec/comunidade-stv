@@ -75,7 +75,7 @@ function getSession()       {
     const s=JSON.parse(localStorage.getItem("stv_sess")||"null");
     if(!s) return null;
     if(s.role==="admin") return s;
-    if(new Date()>new Date(s.exp)){localStorage.removeItem("stv_sess");return null;}
+    if(new Date()>new Date(session.exp)){localStorage.removeItem("stv_sess");return null;}
     return s;
   } catch { return null; }
 }
@@ -271,8 +271,10 @@ body{background-color:#c0d8f0;background-image:linear-gradient(45deg,#b0cce8 25%
 function Gate({ onLogin }) {
   const [pw,setPw]=useState(""); const [err,setErr]=useState("");
   const login = async () => {
+     setErr("");
+      // Admin local
     if(pw===ADMIN_PWD){const s={role:"admin"};saveSession(s);onLogin(s);return;}
-    const response = await fetch("/api/login", {
+     try { const response = await fetch("/api/login", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ password: pw })
@@ -281,17 +283,22 @@ function Gate({ onLogin }) {
 const data = await response.json();
 
 if (!response.ok) {
-  setErr(data.error);
+  setErr(data.error || "Erro ao entrar");
   return;
 }
 
 saveSession(data);
 onLogin(data);
-    if(!user){setErr("Senha incorreta. Verifique com quem te enviou o acesso.");return;}
-    if(new Date()>new Date(user.expires_at)){setErr("Seu acesso expirou. Entre em contato com o administrador.");return;}
-    const s={role:"user",userId:user.id,nome:user.nome,exp:user.exp};
-    saveSession(s);onLogin(s);
+ } catch (error) {
+      setErr("Erro de conexão com servidor");
+    }
   };
+   return (
+    <div>
+      {/* seu JSX */}
+    </div>
+  );
+};
   return (
     <div className="gate">
       <div style={{width:330}}>
@@ -310,7 +317,6 @@ onLogin(data);
       </div>
     </div>
   );
-}
 
 // ─── ADMIN ────────────────────────────────────────────────────────────────────
 function AdminPanel({ onLogout }) {
