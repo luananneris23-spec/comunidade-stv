@@ -295,7 +295,7 @@ onLogin(data);
     }
   };
 
-return (
+ (
     <div className="gate">
       <div style={{width:330}}>
         <div className="box">
