@@ -1,31 +1,31 @@
-const { createClient } = import("@supabase/supabase-js");
+import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
-
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
+  const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
+
   try {
     const { password } = req.body;
 
-    const { data: user } = await supabase
+    const { data: user, error } = await supabase
       .from("users")
       .select("*")
-      .eq("password", password)
+      .eq("senha", password)
       .single();
 
-    if (!user) {
+    if (error || !user) {
       return res.status(401).json({
         error: "Senha incorreta."
       });
     }
 
-    if (new Date() > new Date(user.expires_at)) {
+    if (new Date() > new Date(user.exp)) {
       return res.status(403).json({
         error: "Seu acesso expirou."
       });
@@ -33,9 +33,9 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).json({
       role: "user",
-      userId: user.user_code,
-      nome: user.name,
-      exp: user.expires_at
+      userId: user.id,
+      nome: user.nome,
+      exp: user.exp
     });
 
   } catch (error) {
@@ -44,4 +44,4 @@ module.exports = async function handler(req, res) {
       detail: error.message
     });
   }
-};
+}
