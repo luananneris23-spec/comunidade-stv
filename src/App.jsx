@@ -272,7 +272,7 @@ function Gate({ onLogin }) {
   const [pw,setPw]=useState(""); const [err,setErr]=useState("");
   const login = async () => {
      setErr("");
-      // Admin local
+      
     if(pw===ADMIN_PWD){const s={role:"admin"};saveSession(s);onLogin(s);return;}
      try { const response = await fetch("/api/login", {
   method: "POST",
@@ -289,17 +289,22 @@ if (!response.ok) {
 
 saveSession(data);
 onLogin(data);
- } catch (error) {
+
+ } catch {
       setErr("Erro de conexão com servidor");
     }
   };
+
    return (
-    <div>
-      {/* seu JSX */}
+    <div className="gate">
+      <div style={{ width: 330 }}>
+       {/* seu JSX aqui */} 
+      </div>
     </div>
   );
 };
-  return (
+  
+return (
     <div className="gate">
       <div style={{width:330}}>
         <div className="box">
