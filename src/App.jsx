@@ -314,7 +314,13 @@ onLogin(data);
 
 // ─── ADMIN ────────────────────────────────────────────────────────────────────
 function AdminPanel({ onLogout }) {
-  const [users,setUsersState]=useState(getUsers);
+  const [users,setUsersState]=useState([]);
+
+useEffect(()=>{
+  fetch("/api/list-users")
+    .then(res=>res.json())
+    .then(data=>setUsersState(data));
+},[]);
   const [show,setShow]=useState(false);
   const [form,setForm]=useState({nome:"",email:"",dias:30});
   const [copied,setCopied]=useState(null);
@@ -346,7 +352,11 @@ function AdminPanel({ onLogout }) {
     return;
   }
 
-  setUsersState(prev => [...prev, newUser]);
+  // 🔥 BUSCA A LISTA ATUALIZADA DO BANCO
+  const res = await fetch("/api/list-users");
+  const listaAtualizada = await res.json();
+  setUsersState(listaAtualizada);
+
   setForm({ nome: "", email: "", dias: 30 });
   setShow(false);
 };
