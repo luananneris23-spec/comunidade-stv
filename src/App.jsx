@@ -268,11 +268,11 @@ body{background-color:#c0d8f0;background-image:linear-gradient(45deg,#b0cce8 25%
 `;
 
 // ─── GATE ─────────────────────────────────────────────────────────────────────
-function Gate({ onLogin }) {}
+function Gate({ onLogin }) {
   const [pw,setPw]=useState(""); const [err,setErr]=useState("");
   const login = async () => {
      setErr("");
-      
+      // Admin local
     if(pw===ADMIN_PWD){const s={role:"admin"};saveSession(s);onLogin(s);return;}
      try { const response = await fetch("/api/login", {
   method: "POST",
@@ -289,12 +289,16 @@ if (!response.ok) {
 
 saveSession(data);
 onLogin(data);
-
- } catch {
+ } catch (error) {
       setErr("Erro de conexão com servidor");
     }
   };
-
+   return (
+    <div>
+      {/* seu JSX */}
+    </div>
+  );
+};
  (
     <div className="gate">
       <div style={{width:330}}>
