@@ -16,26 +16,22 @@ export default async function handler(req, res) {
     const { data: user, error } = await supabase
       .from("users")
       .select("*")
-      .eq("senha", password)
+      .eq("password", password)
       .single();
 
     if (error || !user) {
-      return res.status(401).json({
-        error: "Senha incorreta."
-      });
+      return res.status(401).json({ error: "Senha incorreta." });
     }
 
-    if (new Date() > new Date(user.exp)) {
-      return res.status(403).json({
-        error: "Seu acesso expirou."
-      });
+    if (new Date() > new Date(user.expires_at)) {
+      return res.status(403).json({ error: "Seu acesso expirou." });
     }
 
     return res.status(200).json({
       role: "user",
-      userId: user.id,
-      nome: user.nome,
-      exp: user.exp
+      userId: user.user_code,
+      nome: user.name,
+      exp: user.expires_at
     });
 
   } catch (error) {
