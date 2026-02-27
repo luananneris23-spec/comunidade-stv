@@ -269,55 +269,57 @@ body{background-color:#c0d8f0;background-image:linear-gradient(45deg,#b0cce8 25%
 
 // ─── GATE ─────────────────────────────────────────────────────────────────────
 function Gate({ onLogin }) {
-  const [pw,setPw]=useState(""); const [err,setErr]=useState("");
+  const [pw, setPw] = useState("");
+  const [err, setErr] = useState("");
+
   const login = async () => {
-     setErr("");
-      // Admin local
-    if(pw===ADMIN_PWD){const s={role:"admin"};saveSession(s);onLogin(s);return;}
-     try { const response = await fetch("/api/login", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ password: pw })
-});
-
-const data = await response.json();
-
-if (!response.ok) {
-  setErr(data.error || "Erro ao entrar");
-  return;
-}
-
-saveSession(data);
-onLogin(data);
- } catch (error) {
-      setErr("Erro de conexão com servidor");
+    if (pw === ADMIN_PWD) {
+      const s = { role: "admin" };
+      saveSession(s);
+      onLogin(s);
+      return;
     }
+
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: pw })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      setErr(data.error || "Erro ao entrar");
+      return;
+    }
+
+    saveSession(data);
+    onLogin(data);
   };
-   return (
-    <div>
-      {/* seu JSX */}
-    </div>
-  );
-};
- (
+
+  return (
     <div className="gate">
-      <div style={{width:330}}>
+      <div style={{ width: 330 }}>
         <div className="box">
-          <div className="bh or">🔐 Área restrita — acesso por convite</div>
-          <div className="bb" style={{padding:22,textAlign:"center"}}>
-            <div style={{fontSize:24,fontWeight:"bold",color:"#2255aa",fontFamily:"Verdana,Arial",letterSpacing:-1,marginBottom:3}}>Comunidade <em style={{color:"#ee5500",fontStyle:"normal"}}>STV</em></div>
-            <div style={{fontSize:10,color:"#3366aa",marginBottom:4,letterSpacing:1,textTransform:"uppercase"}}>Stories que Vendem</div>
-            <div style={{color:"#666",fontSize:11,marginBottom:16,lineHeight:1.6}}>Bem-vindo à nossa comunidade! 💛<br/>Aqui você vai construir conexões reais<br/>com a sua audiência através dos stories.</div>
-            <div className="fg"><label className="fl">Sua senha de acesso:</label><input className="fi" type="password" placeholder="••••••••" value={pw} onChange={e=>{setPw(e.target.value);setErr("");}} onKeyDown={e=>e.key==="Enter"&&login()}/></div>
-            <button className="btn bo" style={{width:"100%",justifyContent:"center"}} onClick={login}>▶ Entrar na comunidade</button>
-            {err&&<div style={{color:"#cc0000",fontSize:11,marginTop:7,fontWeight:"bold"}}>⚠ {err}</div>}
-            <div style={{color:"#bbb",fontSize:10,marginTop:14}}>Comunidade STV © 2024 · Todos os direitos reservados</div>
-          </div>
+          <h2>Acesso</h2>
+
+          <input
+            type="password"
+            placeholder="Digite sua senha"
+            value={pw}
+            onChange={(e) => setPw(e.target.value)}
+          />
+
+          {err && <div className="error">{err}</div>}
+
+          <button onClick={login}>
+            Entrar
+          </button>
         </div>
       </div>
     </div>
   );
-
+}
 // ─── ADMIN ────────────────────────────────────────────────────────────────────
 function AdminPanel({ onLogout }) {
   const [users,setUsersState]=useState([]);
