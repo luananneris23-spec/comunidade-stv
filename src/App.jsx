@@ -268,7 +268,7 @@ body{background-color:#c0d8f0;background-image:linear-gradient(45deg,#b0cce8 25%
 `;
 
 // ─── GATE ─────────────────────────────────────────────────────────────────────
-function Gate({ onLogin }) {
+function Gate({ onLogin }) {}
   const [pw,setPw]=useState(""); const [err,setErr]=useState("");
   const login = async () => {
      setErr("");
@@ -295,15 +295,6 @@ onLogin(data);
     }
   };
 
-   return (
-    <div className="gate">
-      <div style={{ width: 330 }}>
-       {/* seu JSX aqui */} 
-      </div>
-    </div>
-  );
-};
-  
 return (
     <div className="gate">
       <div style={{width:330}}>
