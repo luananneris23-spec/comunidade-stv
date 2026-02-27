@@ -320,32 +320,36 @@ function AdminPanel({ onLogout }) {
   const [copied,setCopied]=useState(null);
   const sync=fn=>{setUsersState(prev=>{const next=typeof fn==="function"?fn(prev):fn;saveUsers(next);return next;});};
   const criar = async () => {
-    if(!form.nome.trim())return;
-    const exp=new Date();exp.setDate(exp.getDate()+Number(form.dias));
-    sync(u=>[...u,{id:uid(),nome:form.nome,email:form.email,senha:pwdGen(form.nome),dias:Number(form.dias),exp:exp.toISOString()}]);
-    const novoUsuario = {
-  id: uid(),
-  nome: form.nome,
-  email: form.email,
-  senha: pwdGen(form.nome),
-  dias: Number(form.dias),
-  exp: exp.toISOString()
+  if (!form.nome.trim()) return;
+
+  const exp = new Date();
+  exp.setDate(exp.getDate() + Number(form.dias));
+
+  const newUser = {
+    id: crypto.randomUUID(),
+    nome: form.nome,
+    email: form.email,
+    senha: pwdGen(form.nome),
+    exp: exp.toISOString()
+  };
+
+  const response = await fetch("/api/create-user", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newUser)
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    alert(data.error || "Erro ao criar usuário");
+    return;
+  }
+
+  setUsersState(prev => [...prev, newUser]);
+  setForm({ nome: "", email: "", dias: 30 });
+  setShow(false);
 };
-
-sync(u => [...u, novoUsuario]);
-
-await fetch("/api/create-user", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(novoUsuario)
-})
-.then(res => res.json())
-.then(data => {
-  console.log("RESPOSTA API:", data);
-})
-.catch(err => {
-  console.error("ERRO API:", err);
-});}
   const remover=id=>{if(!confirm("Remover membro?"))return;sync(u=>u.filter(x=>x.id!==id));localStorage.removeItem("stv_d_"+id);};
   const renovar=(id,dias)=>sync(u=>u.map(x=>{if(x.id!==id)return x;const exp=new Date();exp.setDate(exp.getDate()+dias);return{...x,exp:exp.toISOString()};}));
   const copiar=(txt,id)=>{navigator.clipboard.writeText(txt).catch(()=>{});setCopied(id);setTimeout(()=>setCopied(null),2000);};
