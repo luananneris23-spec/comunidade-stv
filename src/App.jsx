@@ -326,6 +326,7 @@ useEffect(()=>{
   const [copied,setCopied]=useState(null);
   const sync=fn=>{setUsersState(prev=>{const next=typeof fn==="function"?fn(prev):fn;saveUsers(next);return next;});};
   const criar = async () => {
+    console.log("CRIAR FOI CHAMADO");
   if (!form.nome.trim()) return;
 
   const exp = new Date();
