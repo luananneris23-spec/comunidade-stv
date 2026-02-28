@@ -28,16 +28,13 @@ export default async function handler(req, res) {
     }
 
     return res.status(200).json({
-      role: "user",
+      role:   "user",
       userId: user.user_code,
-      nome: user.name,
-      exp: user.expires_at
+      nome:   user.name,
+      exp:    user.expires_at,
     });
 
   } catch (error) {
-    return res.status(500).json({
-      error: "Erro interno",
-      detail: error.message
-    });
+    return res.status(500).json({ error: "Erro interno", detail: error.message });
   }
 }

@@ -75,7 +75,7 @@ function getSession()       {
     const s=JSON.parse(localStorage.getItem("stv_sess")||"null");
     if(!s) return null;
     if(s.role==="admin") return s;
-    if(new Date()>new Date(session.exp)){localStorage.removeItem("stv_sess");return null;}
+    if(new Date()>new Date(s.exp)){localStorage.removeItem("stv_sess");return null;}
     return s;
   } catch { return null; }
 }
@@ -298,26 +298,37 @@ function Gate({ onLogin }) {
   };
 
   return (
-    <div className="gate">
-      <div style={{ width: 330 }}>
-        <div className="box">
-          <h2>Acesso</h2>
-
-          <input
-            type="password"
-            placeholder="Digite sua senha"
-            value={pw}
-            onChange={(e) => setPw(e.target.value)}
-          />
-
-          {err && <div className="error">{err}</div>}
-
-          <button onClick={login}>
-            Entrar
-          </button>
+    <>
+      <style>{CSS}</style>
+      <div className="gate">
+        <div style={{width:330}}>
+          <div className="box">
+            <div className="bh or">🔐 Área restrita — acesso por convite</div>
+            <div className="bb" style={{padding:22,textAlign:"center"}}>
+              <div style={{fontSize:24,fontWeight:"bold",color:"#2255aa",fontFamily:"Verdana,Arial",letterSpacing:-1,marginBottom:3}}>
+                Comunidade <em style={{color:"#ee5500",fontStyle:"normal"}}>STV</em>
+              </div>
+              <div style={{fontSize:10,color:"#3366aa",marginBottom:4,letterSpacing:1,textTransform:"uppercase"}}>Stories que Vendem</div>
+              <div style={{color:"#666",fontSize:11,marginBottom:16,lineHeight:1.6}}>
+                Bem-vindo à nossa comunidade! 💛<br/>
+                Insira sua senha de acesso para continuar.
+              </div>
+              <div className="fg">
+                <label className="fl">Sua senha de acesso:</label>
+                <input className="fi" type="password" placeholder="••••••••" value={pw}
+                  onChange={e=>{setPw(e.target.value);setErr("");}}
+                  onKeyDown={e=>e.key==="Enter"&&login()}/>
+              </div>
+              <button className="btn bo" style={{width:"100%",justifyContent:"center"}} onClick={login}>
+                ▶ Entrar na comunidade
+              </button>
+              {err&&<div style={{color:"#cc0000",fontSize:11,marginTop:7,fontWeight:"bold"}}>⚠ {err}</div>}
+              <div style={{color:"#bbb",fontSize:10,marginTop:14}}>Comunidade STV © 2024 · Todos os direitos reservados</div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 // ─── ADMIN ────────────────────────────────────────────────────────────────────
@@ -369,8 +380,16 @@ useEffect(()=>{
   setForm({ nome: "", email: "", dias: 30 });
   setShow(false);
 };
-  const remover=id=>{if(!confirm("Remover membro?"))return;sync(u=>u.filter(x=>x.id!==id));localStorage.removeItem("stv_d_"+id);};
-  const renovar=(id,dias)=>sync(u=>u.map(x=>{if(x.id!==id)return x;const exp=new Date();exp.setDate(exp.getDate()+dias);return{...x,exp:exp.toISOString()};}));
+  const remover=async id=>{
+    if(!confirm("Remover membro?"))return;
+    await fetch("/api/delete-user",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id})});
+    setUsersState(u=>u.filter(x=>x.id!==id));
+  };
+  const renovar=async(id,dias)=>{
+    const exp=new Date();exp.setDate(exp.getDate()+dias);
+    await fetch("/api/update-user",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id,exp:exp.toISOString()})});
+    setUsersState(u=>u.map(x=>x.id===id?{...x,exp:exp.toISOString()}:x));
+  };
   const copiar=(txt,id)=>{navigator.clipboard.writeText(txt).catch(()=>{});setCopied(id);setTimeout(()=>setCopied(null),2000);};
   const agora=new Date();
   return (
@@ -387,7 +406,7 @@ useEffect(()=>{
           <div className="bh">👥 Membros cadastrados <button className="btn bgn bsm" onClick={()=>setShow(true)}>+ novo membro</button></div>
           <div className="bbl">
             {users.length===0&&<div className="ep"><div className="ei">👥</div><div className="et">Nenhum membro ainda</div><div className="es">Cadastre o primeiro membro</div></div>}
-            {users.length>0&&<table className="ot"><thead><tr><th>Nome</th><th>E-mail</th><th>Senha</th><th>Expira</th><th>Status</th><th>Ações</th></tr></thead><tbody>{users.map(u=>{const ativo=agora<new Date(user.expires_at);const diasRest=Math.max(0,Math.ceil((new Date(u.exp)-agora)/86400000));return(<tr key={u.id}><td style={{fontWeight:"bold"}}>{u.nome}</td><td style={{color:"#666"}}>{u.email||"—"}</td><td className="pw-cell"><span style={{letterSpacing:1}}>{u.senha}</span><button className="btn bw bsm" style={{marginLeft:5}} onClick={()=>copiar(u.senha,u.id)}>{copied===u.id?"✔":"📋"}</button></td><td>{new Date(u.exp).toLocaleDateString("pt-BR")}</td><td>{ativo?<span className="act"><span className="sbl g"/>{diasRest}d</span>:<span className="exp2"><span className="sbl gz"/>Expirado</span>}</td><td><div style={{display:"flex",gap:3}}><button className="btn bl bsm" onClick={()=>renovar(u.id,30)}>+30d</button><button className="btn bo bsm" onClick={()=>renovar(u.id,7)}>+7d</button><button className="btn brd bsm" onClick={()=>remover(u.id)}>✕</button></div></td></tr>);})}</tbody></table>}
+            {users.length>0&&<table className="ot"><thead><tr><th>Nome</th><th>E-mail</th><th>Senha</th><th>Expira</th><th>Status</th><th>Ações</th></tr></thead><tbody>{users.map(u=>{const ativo=agora<new Date(u.exp);const diasRest=Math.max(0,Math.ceil((new Date(u.exp)-agora)/86400000));return(<tr key={u.id}><td style={{fontWeight:"bold"}}>{u.nome}</td><td style={{color:"#666"}}>{u.email||"—"}</td><td className="pw-cell"><span style={{letterSpacing:1}}>{u.senha}</span><button className="btn bw bsm" style={{marginLeft:5}} onClick={()=>copiar(u.senha,u.id)}>{copied===u.id?"✔":"📋"}</button></td><td>{new Date(u.exp).toLocaleDateString("pt-BR")}</td><td>{ativo?<span className="act"><span className="sbl g"/>{diasRest}d</span>:<span className="exp2"><span className="sbl gz"/>Expirado</span>}</td><td><div style={{display:"flex",gap:3}}><button className="btn bl bsm" onClick={()=>renovar(u.id,30)}>+30d</button><button className="btn bo bsm" onClick={()=>renovar(u.id,7)}>+7d</button><button className="btn brd bsm" onClick={()=>remover(u.id)}>✕</button></div></td></tr>);})}</tbody></table>}
           </div>
         </div>
         <div className="box"><div className="bh or">📖 Como funciona</div><div className="bb" style={{fontSize:11,lineHeight:1.9,color:"#444"}}><div>1. Cadastre o membro e defina os dias de acesso</div><div>2. O sistema gera a senha automaticamente — clique 📋 para copiar</div><div>3. Envie a senha para o cliente</div><div>4. O cliente entra com a senha e usa o app com IA integrada</div><div>5. Use +30d ou +7d para renovar o acesso</div></div></div>

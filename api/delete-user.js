@@ -11,17 +11,12 @@ export default async function handler(req, res) {
   );
 
   try {
-    const { id, nome, email, senha, exp } = req.body;
+    const { id } = req.body; // id = user_code
 
     const { error } = await supabase
       .from("users")
-      .insert({
-        user_code:  id,
-        name:       nome,
-        email:      email || null,
-        password:   senha,
-        expires_at: exp,
-      });
+      .delete()
+      .eq("user_code", id);
 
     if (error) {
       return res.status(400).json({ error: error.message });
