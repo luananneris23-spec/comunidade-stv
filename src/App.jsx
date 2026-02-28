@@ -127,28 +127,31 @@ ESTILO DE RESPOSTA:
 // ─── CHAVE DA API OPENAI ─────────────────────────────────────────────────────
 // IMPORTANTE: Substitua pela sua chave em https://platform.openai.com/api-keys
 // Para produção, use uma variável de ambiente — nunca exponha a chave publicamente
-async function callAI(systemPrompt, userPrompt) {
+async function callAI(systemPrompt, userPrompt, userId) {
   const res = await fetch("/api/chat", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
+      user_id: userId,
       messages: [
         { role: "system", content: systemPrompt },
-        { role: "user", content: userPrompt }
+        { role: "user",   content: userPrompt }
       ]
     })
   });
 
   if (!res.ok) {
-    const err = await res.json().catch(() => ({
-      error: { message: res.statusText }
-    }));
+    const err = await res.json().catch(() => ({ error: { message: res.statusText } }));
     throw new Error(err?.error?.message || "Erro na API");
   }
 
   const data = await res.json();
+
+  // Retorna aviso de limite se a API mandou
+  if (data.limitWarning) {
+    console.warn("Limite:", data.limitWarning);
+  }
+
   return data.choices?.[0]?.message?.content || "";
 }
 function parseJSON(txt) {
@@ -298,37 +301,26 @@ function Gate({ onLogin }) {
   };
 
   return (
-    <>
-      <style>{CSS}</style>
-      <div className="gate">
-        <div style={{width:330}}>
-          <div className="box">
-            <div className="bh or">🔐 Área restrita — acesso por convite</div>
-            <div className="bb" style={{padding:22,textAlign:"center"}}>
-              <div style={{fontSize:24,fontWeight:"bold",color:"#2255aa",fontFamily:"Verdana,Arial",letterSpacing:-1,marginBottom:3}}>
-                Comunidade <em style={{color:"#ee5500",fontStyle:"normal"}}>STV</em>
-              </div>
-              <div style={{fontSize:10,color:"#3366aa",marginBottom:4,letterSpacing:1,textTransform:"uppercase"}}>Stories que Vendem</div>
-              <div style={{color:"#666",fontSize:11,marginBottom:16,lineHeight:1.6}}>
-                Bem-vindo à nossa comunidade! 💛<br/>
-                Insira sua senha de acesso para continuar.
-              </div>
-              <div className="fg">
-                <label className="fl">Sua senha de acesso:</label>
-                <input className="fi" type="password" placeholder="••••••••" value={pw}
-                  onChange={e=>{setPw(e.target.value);setErr("");}}
-                  onKeyDown={e=>e.key==="Enter"&&login()}/>
-              </div>
-              <button className="btn bo" style={{width:"100%",justifyContent:"center"}} onClick={login}>
-                ▶ Entrar na comunidade
-              </button>
-              {err&&<div style={{color:"#cc0000",fontSize:11,marginTop:7,fontWeight:"bold"}}>⚠ {err}</div>}
-              <div style={{color:"#bbb",fontSize:10,marginTop:14}}>Comunidade STV © 2024 · Todos os direitos reservados</div>
-            </div>
-          </div>
+    <div className="gate">
+      <div style={{ width: 330 }}>
+        <div className="box">
+          <h2>Acesso</h2>
+
+          <input
+            type="password"
+            placeholder="Digite sua senha"
+            value={pw}
+            onChange={(e) => setPw(e.target.value)}
+          />
+
+          {err && <div className="error">{err}</div>}
+
+          <button onClick={login}>
+            Entrar
+          </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 // ─── ADMIN ────────────────────────────────────────────────────────────────────
@@ -380,16 +372,8 @@ useEffect(()=>{
   setForm({ nome: "", email: "", dias: 30 });
   setShow(false);
 };
-  const remover=async id=>{
-    if(!confirm("Remover membro?"))return;
-    await fetch("/api/delete-user",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id})});
-    setUsersState(u=>u.filter(x=>x.id!==id));
-  };
-  const renovar=async(id,dias)=>{
-    const exp=new Date();exp.setDate(exp.getDate()+dias);
-    await fetch("/api/update-user",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id,exp:exp.toISOString()})});
-    setUsersState(u=>u.map(x=>x.id===id?{...x,exp:exp.toISOString()}:x));
-  };
+  const remover=id=>{if(!confirm("Remover membro?"))return;sync(u=>u.filter(x=>x.id!==id));localStorage.removeItem("stv_d_"+id);};
+  const renovar=(id,dias)=>sync(u=>u.map(x=>{if(x.id!==id)return x;const exp=new Date();exp.setDate(exp.getDate()+dias);return{...x,exp:exp.toISOString()};}));
   const copiar=(txt,id)=>{navigator.clipboard.writeText(txt).catch(()=>{});setCopied(id);setTimeout(()=>setCopied(null),2000);};
   const agora=new Date();
   return (
@@ -449,7 +433,7 @@ Responda SOMENTE com JSON válido neste formato exato:
 CTAs válidos: ${CTAS.join(", ")}
 Lembre: 1º story DEVE ter Resposta Inbox, Enquete ou Caixinha. Mínimo 5 mecanismos diferentes. Mínimo 5 CTAs ativos.`;
 
-      const txt=await callAI(sys,prompt);
+      const txt=await callAI(sys,prompt,userData.userId);
       const data=parseJSON(txt);
       if(!data||!data.recados) throw new Error("Resposta inválida da IA");
       setResult(data);
@@ -523,7 +507,7 @@ Responda SOMENTE com JSON:
     { "mec": "nome exato do mecanismo", "motivo": "por que esse mecanismo funciona aqui (1 frase)", "cta": "CTA recomendado" }
   ]
 }`;
-      const txt=await callAI(sys,prompt);
+      const txt=await callAI(sys,prompt,userData.userId);
       const data=parseJSON(txt);
       if(!data?.sugestoes) throw new Error("Resposta inválida");
       setSugestoes(data.sugestoes);
@@ -580,7 +564,7 @@ Responda SOMENTE com JSON:
     { "titulo": "título curto e criativo", "desc": "descrição breve de como usar essa ideia (1-2 frases)" }
   ]
 }`;
-      const txt=await callAI(sys,prompt);
+      const txt=await callAI(sys,prompt,userData.userId);
       const data=parseJSON(txt);
       if(!data?.ideias) throw new Error("Resposta inválida");
       setIdeias(data.ideias);
@@ -954,7 +938,7 @@ function UserApp({ session, onLogout }) {
   const setProds=fn=>setData(d=>({...d,prods:typeof fn==="function"?fn(d.prods):fn}));
   const setIdeas=fn=>setData(d=>({...d,ideas:typeof fn==="function"?fn(d.ideas):fn}));
   const nav=[["home","🏠","Início"],["comunidades","📱","Comunidades"],["mecanismos","⚙","Mecanismos"],["vitrine","🛍️","Produtos"],["mural","📌","Mural"]];
-  const userData={nicho:data.nicho,prods:data.prods,seqs:data.seqs};
+  const userData={nicho:data.nicho,prods:data.prods,seqs:data.seqs,userId:session.userId};
   return (
     <>
       <style>{CSS}</style>
