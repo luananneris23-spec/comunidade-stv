@@ -146,12 +146,9 @@ async function callAI(systemPrompt, userPrompt, userId) {
   }
 
   const data = await res.json();
-
-  // Retorna aviso de limite se a API mandou
   if (data.limitWarning) {
-    console.warn("Limite:", data.limitWarning);
+    console.warn("Limite IA:", data.limitWarning);
   }
-
   return data.choices?.[0]?.message?.content || "";
 }
 function parseJSON(txt) {
@@ -301,26 +298,42 @@ function Gate({ onLogin }) {
   };
 
   return (
-    <div className="gate">
-      <div style={{ width: 330 }}>
-        <div className="box">
-          <h2>Acesso</h2>
-
-          <input
-            type="password"
-            placeholder="Digite sua senha"
-            value={pw}
-            onChange={(e) => setPw(e.target.value)}
-          />
-
-          {err && <div className="error">{err}</div>}
-
-          <button onClick={login}>
-            Entrar
-          </button>
+    <>
+      <style>{CSS}</style>
+      <div className="gate">
+        <div style={{width:340}}>
+          <div className="box">
+            <div className="bh or">🔐 Área restrita — acesso por convite</div>
+            <div className="bbl" style={{textAlign:"center"}}>
+              <div style={{fontSize:26,fontWeight:"bold",color:"#2255aa",fontFamily:"Verdana,Arial",letterSpacing:-1,marginBottom:2}}>
+                Comunidade <em style={{color:"#ee5500",fontStyle:"normal"}}>STV</em>
+              </div>
+              <div style={{fontSize:10,color:"#3366aa",marginBottom:4,letterSpacing:1,textTransform:"uppercase"}}>Stories que Vendem</div>
+              <div style={{color:"#666",fontSize:11,marginBottom:18,lineHeight:1.7}}>
+                Bem-vindo à nossa comunidade! 💛<br/>
+                Insira sua senha de acesso para continuar.
+              </div>
+              <div className="fg" style={{textAlign:"left"}}>
+                <label className="fl">Sua senha de acesso:</label>
+                <input
+                  className="fi"
+                  type="password"
+                  placeholder="••••••••"
+                  value={pw}
+                  onChange={e=>{setPw(e.target.value);setErr("");}}
+                  onKeyDown={e=>e.key==="Enter"&&login()}
+                />
+              </div>
+              <button className="btn bo" style={{width:"100%",justifyContent:"center",padding:"6px 10px",fontSize:12,marginBottom:6}} onClick={login}>
+                ▶ Entrar na comunidade
+              </button>
+              {err&&<div style={{color:"#cc0000",fontSize:11,marginTop:5,fontWeight:"bold",padding:"5px 8px",background:"#fff5f5",border:"1px solid #ffcccc",borderRadius:3}}>⚠ {err}</div>}
+              <div style={{color:"#bbb",fontSize:10,marginTop:16}}>Comunidade STV © 2024 · Todos os direitos reservados</div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 // ─── ADMIN ────────────────────────────────────────────────────────────────────
