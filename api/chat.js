@@ -5,13 +5,6 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-// ─── LIMITE DE USO MENSAL ─────────────────────────────────────────────────────
-// GPT-4o-mini custa ~$0.001 por chamada (média de 2000 tokens)
-// 30 chamadas/mês = ~R$0,15/usuário — bem abaixo de R$10
-// Ajuste LIMITE_MENSAL conforme quiser
-const LIMITE_MENSAL = 30;
-const DIAS_CICLO    = 30;
-
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -26,7 +19,19 @@ export default async function handler(req, res) {
 
     const now = new Date();
 
-    // ── Buscar uso atual ─────────────────────────────────────────────────────
+    // ── Buscar o limite configurado no Supabase ──────────────────────────────
+    // Tabela "config" com coluna "key" e "value"
+    // Você muda o limite diretamente no Supabase — sem precisar mexer no código!
+    const { data: configData } = await supabase
+      .from("config")
+      .select("value")
+      .eq("key", "limite_mensal_ia")
+      .maybeSingle();
+
+    const LIMITE_MENSAL = configData ? parseInt(configData.value) : 30;
+    const DIAS_CICLO = 30;
+
+    // ── Buscar uso atual do usuário ──────────────────────────────────────────
     const { data: usageData } = await supabase
       .from("usage")
       .select("*")
@@ -36,6 +41,7 @@ export default async function handler(req, res) {
     let callsUsed = 0;
 
     if (!usageData) {
+      // Primeira geração — cria registro
       await supabase.from("usage").insert({
         user_id,
         first_call_at: now.toISOString(),
@@ -46,6 +52,7 @@ export default async function handler(req, res) {
       const diffDays = (now - new Date(usageData.first_call_at)) / (1000 * 60 * 60 * 24);
 
       if (diffDays > DIAS_CICLO) {
+        // Ciclo expirou — reinicia
         await supabase
           .from("usage")
           .update({ first_call_at: now.toISOString(), calls_used: 1 })
