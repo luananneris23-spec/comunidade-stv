@@ -5,44 +5,44 @@ const ADMIN_PWD = "admin@stv2024";
 
 // ─── DADOS ───────────────────────────────────────────────────────────────────
 const MECANISMOS = [
-  { id:1,  nome:"Combustível Extra",                     cat:"engajamento", desc:"Trazer audiência de outro lugar para os stories.", ex:"Hoje vou dar uma aula nos stories. Me fala seu nicho!" },
-  { id:2,  nome:"Desafio Curto com Promessa de Análise", cat:"engajamento", desc:"Propor desafio prometendo análise. Incentiva interação por inbox.", ex:"Me envia sua página de vendas por inbox que eu analiso ao vivo." },
-  { id:3,  nome:"Conversa Sem Privacidade",              cat:"engajamento", desc:"Mostrar trecho de conversa do inbox nos stories.", ex:"Tirar print de uma conversa e postar com comentário." },
-  { id:4,  nome:"Dia do Hotseat",                        cat:"engajamento", desc:"Pedir para a audiência contribuir com conteúdo.", ex:"O que vocês acham que tem de errado nessa página? Me manda por inbox." },
-  { id:5,  nome:"Meta Coletiva",                         cat:"engajamento", desc:"Estipular uma meta para entregar um benefício.", ex:"Se esse story bater 500 compartilhamentos eu vou [...]." },
-  { id:6,  nome:"História com Gancho",                   cat:"conexao",     desc:"Contar uma história que gera contexto para uma ação.", ex:"Hoje eu vou contar a história do dia que eu [...]." },
-  { id:7,  nome:"Cultura de Resultado",                  cat:"prova",       desc:"Incentivar audiência a mostrar resultados.", ex:"Me manda prints de faturamento para eu compartilhar aqui." },
-  { id:8,  nome:"Piada Interna",                         cat:"conexao",     desc:"Criar uma piada interna por repetição.", ex:"Repetir uma piada recorrente da sua comunidade." },
-  { id:9,  nome:"Pânico pelo Conteúdo",                  cat:"antecipacao", desc:"Gerar forte antecipação pelo conteúdo.", ex:"Vou revelar um dos mecanismos que mais me traz vendas hoje à meia-noite." },
-  { id:10, nome:"Ansiedade pela Abertura",               cat:"antecipacao", desc:"Incentivar comprovante de ação. Quem não fez percebe que está de fora.", ex:"Se você já comprou o ingresso, manda aqui pra eu saber quem vai." },
-  { id:11, nome:"Abertura de Carrinho",                  cat:"vendas",      desc:"Gerar antecipação pela abertura de carrinho.", ex:"Amanhã às 9h eu vou abrir as vendas para [...]." },
-  { id:12, nome:"Ative a Notificação",                   cat:"antecipacao", desc:"Gerar expectativa por conteúdo futuro.", ex:"Amanhã eu vou falar sobre [...]." },
-  { id:13, nome:"Alerta para Voltar",                    cat:"engajamento", desc:"Convidar o público a voltar os stories.", ex:"Volta os stories e me manda um emoji no que mais fez sentido." },
-  { id:14, nome:"BI Apurado",                            cat:"pesquisa",    desc:"Realizar uma pesquisa com a audiência.", ex:"Me conta por que você comprou o [...]." },
-  { id:15, nome:"Print Valioso",                         cat:"engajamento", desc:"Incentivar a audiência a tirar print.", ex:"Aproveita pra tirar print do que gerou valor pra você." },
-  { id:16, nome:"Identidade do Comunicador",             cat:"conexao",     desc:"Demonstrar sua identidade de comunicador.", ex:"Exagerar suas características naturais em momentos oportunos." },
-  { id:17, nome:"Identidade do Produto",                 cat:"vendas",      desc:"Demonstrar a identidade do produto.", ex:"Mostrar respostas em que pessoas falam de aspectos exclusivos do produto." },
-  { id:18, nome:"Identidade do Consumidor",              cat:"conexao",     desc:"Dar voz para o consumidor ideal.", ex:"Quando ver uma atitude positiva em um cliente, exalte ela nos stories." },
-  { id:19, nome:"Desabafo",                              cat:"conexao",     desc:"Estimular o público a desabafar.", ex:"Você já teve uma experiência ruim com [...]? Me conta aqui." },
-  { id:20, nome:"Opinião de Quem Comprou",               cat:"prova",       desc:"Pedir opinião de quem comprou.", ex:"Se você comprou o [produto], me fala o que achou." },
-  { id:21, nome:"Peça Compartilhamento",                 cat:"crescimento", desc:"Incentivar o público a compartilhar o conteúdo.", ex:"Se você achou esse conteúdo bom, compartilha com seus amigos." },
-  { id:22, nome:"Nomes Esquisitos",                      cat:"conexao",     desc:"Utilizar nomes próprios na comunicação.", ex:"Utilize a técnica do mortal carpado para [...]." },
-  { id:23, nome:"Espetacularização",                     cat:"conexao",     desc:"Exaltar determinada ação.", ex:"Mostrar de forma especial algo que aconteceu com você." },
-  { id:24, nome:"Você Sabia",                            cat:"conteudo",    desc:"Gerar curiosidade com um fato interessante.", ex:"Você sabia que 90% da população brasileira [...]?" },
-  { id:25, nome:"Micro Influência",                      cat:"conexao",     desc:"Recomendar algo para audiência.", ex:"Qualquer pessoa deveria assistir o filme [...]." },
-  { id:26, nome:"Presente Difícil",                      cat:"engajamento", desc:"Oferecer um presente para quem engaja.", ex:"Quem fizer isso vai ganhar [...]." },
-  { id:27, nome:"Elemento Escondido",                    cat:"engajamento", desc:"Falar que tem uma resposta escondida na sequência.", ex:"Você percebeu a resposta escondida que eu deixei nos últimos stories?" },
-  { id:28, nome:"Tarja de Curiosidade",                  cat:"conteudo",    desc:"Esconder a parte importante de uma mensagem.", ex:"Eu fiz 50 mil reais utilizando o @#$%*" },
-  { id:29, nome:"Psicologia Reversa",                    cat:"vendas",      desc:"Dar uma resposta contra intuitiva.", ex:"Tô doido pra comprar seu curso. R: Não compre [...]." },
-  { id:30, nome:"Resumo",                                cat:"conteudo",    desc:"Pedir um resumo do seu conteúdo.", ex:"O melhor resumo da Live vai ganhar [...]." },
-  { id:31, nome:"7 Erros",                               cat:"engajamento", desc:"Pedir para encontrar o erro.", ex:"Nessa página tem apenas um erro. Você identificou?" },
-  { id:32, nome:"Diário",                                cat:"conexao",     desc:"Fazer um diário de algum momento especial.", ex:"Fazer um diário do seu natal, aniversário, viagem especial..." },
-  { id:33, nome:"Crítica",                               cat:"engajamento", desc:"Deixar uma deixa para crítica.", ex:"O que você diria para esse sujeito [...]?" },
-  { id:34, nome:"Demonstração Curta",                    cat:"vendas",      desc:"Mostrar como sua solução funciona na prática.", ex:"Vídeo de 30s mostrando o produto/serviço com resultado real." },
-  { id:35, nome:"Enquete com Curiosidade Real",          cat:"pesquisa",    desc:"Perguntas que o público tem curiosidade em saber.", ex:"Usar a enquete para saber quais pessoas mais precisam da sua ajuda." },
-  { id:36, nome:"Link Oculto",                           cat:"vendas",      desc:"Colocar o link do produto com um nome chamativo.", ex:"Não seja curioso - clique aqui." },
-  { id:37, nome:"Indicação Pretensiosa",                 cat:"engajamento", desc:"Pedir aos seguidores para enviarem indicações.", ex:"Queria assistir um filme bom hoje à noite. Você conhece algum?" },
-  { id:38, nome:"Levante a Mão",                         cat:"vendas",      desc:"Fazer triagem no público para achar os mais prontos para comprar.", ex:"Se você tem interesse em [produto] me manda 'eu quero' por inbox." },
+  { id:1,  nome:"Ignição Externa",                     cat:"engajamento", desc:"Trazer audiência de outro lugar para os stories.", ex:"Hoje vou dar uma aula nos stories. Me fala seu nicho!" },
+  { id:2,  nome:"Missão com Recompensa", cat:"engajamento", desc:"Propor desafio prometendo análise. Incentiva interação por inbox.", ex:"Me envia sua página de vendas por inbox que eu analiso ao vivo." },
+  { id:3,  nome:"Print Aberto",              cat:"engajamento", desc:"Mostrar trecho de conversa do inbox nos stories.", ex:"Tirar print de uma conversa e postar com comentário." },
+  { id:4,  nome:"Tribunal da Comunidade",                        cat:"engajamento", desc:"Pedir para a audiência contribuir com conteúdo.", ex:"O que vocês acham que tem de errado nessa página? Me manda por inbox." },
+  { id:5,  nome:"Contrato Coletivo",                         cat:"engajamento", desc:"Estipular uma meta para entregar um benefício.", ex:"Se esse story bater 500 compartilhamentos eu vou [...]." },
+  { id:6,  nome:"Anzol Narrativo",                   cat:"conexao",     desc:"Contar uma história que gera contexto para uma ação.", ex:"Hoje eu vou contar a história do dia que eu [...]." },
+  { id:7,  nome:"Vitrine da Transformação",                  cat:"prova",       desc:"Incentivar audiência a mostrar resultados.", ex:"Me manda prints de faturamento para eu compartilhar aqui." },
+  { id:8,  nome:"Código da Tribo",                         cat:"conexao",     desc:"Criar uma piada interna por repetição.", ex:"Repetir uma piada recorrente da sua comunidade." },
+  { id:9,  nome:"Contagem Regressiva de Conteúdo",                  cat:"antecipacao", desc:"Gerar forte antecipação pelo conteúdo.", ex:"Vou revelar um dos mecanismos que mais me traz vendas hoje à meia-noite." },
+  { id:10, nome:"Fila de Espera Viva",               cat:"antecipacao", desc:"Incentivar comprovante de ação. Quem não fez percebe que está de fora.", ex:"Se você já comprou o ingresso, manda aqui pra eu saber quem vai." },
+  { id:11, nome:"Hora H",                  cat:"vendas",      desc:"Gerar antecipação pela abertura de carrinho.", ex:"Amanhã às 9h eu vou abrir as vendas para [...]." },
+  { id:12, nome:"Sinal de Largada",                   cat:"antecipacao", desc:"Gerar expectativa por conteúdo futuro.", ex:"Amanhã eu vou falar sobre [...]." },
+  { id:13, nome:"Chama de Volta",                    cat:"engajamento", desc:"Convidar o público a voltar os stories.", ex:"Volta os stories e me manda um emoji no que mais fez sentido." },
+  { id:14, nome:"Escuta da Tribo",                            cat:"pesquisa",    desc:"Realizar uma pesquisa com a audiência.", ex:"Me conta por que você comprou o [...]." },
+  { id:15, nome:"Captura Obrigatória",                         cat:"engajamento", desc:"Incentivar a audiência a tirar print.", ex:"Aproveita pra tirar print do que gerou valor pra você." },
+  { id:16, nome:"Quem Sou Eu Aqui",             cat:"conexao",     desc:"Demonstrar sua identidade de comunicador.", ex:"Exagerar suas características naturais em momentos oportunos." },
+  { id:17, nome:"DNA do Produto",                 cat:"vendas",      desc:"Demonstrar a identidade do produto.", ex:"Mostrar respostas em que pessoas falam de aspectos exclusivos do produto." },
+  { id:18, nome:"Espelho do Seguidor",              cat:"conexao",     desc:"Dar voz para o consumidor ideal.", ex:"Quando ver uma atitude positiva em um cliente, exalte ela nos stories." },
+  { id:19, nome:"Confessionário",                              cat:"conexao",     desc:"Estimular o público a desabafar.", ex:"Você já teve uma experiência ruim com [...]? Me conta aqui." },
+  { id:20, nome:"Voz de Quem Viveu",               cat:"prova",       desc:"Pedir opinião de quem comprou.", ex:"Se você comprou o [produto], me fala o que achou." },
+  { id:21, nome:"Espalha Isso",                 cat:"crescimento", desc:"Incentivar o público a compartilhar o conteúdo.", ex:"Se você achou esse conteúdo bom, compartilha com seus amigos." },
+  { id:22, nome:"Batismo de Método",                      cat:"conexao",     desc:"Utilizar nomes próprios na comunicação.", ex:"Utilize a técnica do mortal carpado para [...]." },
+  { id:23, nome:"Palco do Momento",                     cat:"conexao",     desc:"Exaltar determinada ação.", ex:"Mostrar de forma especial algo que aconteceu com você." },
+  { id:24, nome:"Fato que Para Tudo",                            cat:"conteudo",    desc:"Gerar curiosidade com um fato interessante.", ex:"Você sabia que 90% da população brasileira [...]?" },
+  { id:25, nome:"Indicação de Bastidor",                      cat:"conexao",     desc:"Recomendar algo para audiência.", ex:"Qualquer pessoa deveria assistir o filme [...]." },
+  { id:26, nome:"Prêmio Merecido",                      cat:"engajamento", desc:"Oferecer um presente para quem engaja.", ex:"Quem fizer isso vai ganhar [...]." },
+  { id:27, nome:"Segredo nos Stories",                    cat:"engajamento", desc:"Falar que tem uma resposta escondida na sequência.", ex:"Você percebeu a resposta escondida que eu deixei nos últimos stories?" },
+  { id:28, nome:"Dado Censurado",                  cat:"conteudo",    desc:"Esconder a parte importante de uma mensagem.", ex:"Eu fiz 50 mil reais utilizando o @#$%*" },
+  { id:29, nome:"Virada de Jogo",                    cat:"vendas",      desc:"Dar uma resposta contra intuitiva.", ex:"Tô doido pra comprar seu curso. R: Não compre [...]." },
+  { id:30, nome:"Missão de Resumir",                                cat:"conteudo",    desc:"Pedir um resumo do seu conteúdo.", ex:"O melhor resumo da Live vai ganhar [...]." },
+  { id:31, nome:"Ache o Erro",                               cat:"engajamento", desc:"Pedir para encontrar o erro.", ex:"Nessa página tem apenas um erro. Você identificou?" },
+  { id:32, nome:"Bastidores em Série",                                cat:"conexao",     desc:"Fazer um diário de algum momento especial.", ex:"Fazer um diário do seu natal, aniversário, viagem especial..." },
+  { id:33, nome:"Tribunal Aberto",                               cat:"engajamento", desc:"Deixar uma deixa para crítica.", ex:"O que você diria para esse sujeito [...]?" },
+  { id:34, nome:"Prova em 30 Segundos",                    cat:"vendas",      desc:"Mostrar como sua solução funciona na prática.", ex:"Vídeo de 30s mostrando o produto/serviço com resultado real." },
+  { id:35, nome:"Enquete com Intenção",          cat:"pesquisa",    desc:"Perguntas que o público tem curiosidade em saber.", ex:"Usar a enquete para saber quais pessoas mais precisam da sua ajuda." },
+  { id:36, nome:"Porta Secreta",                           cat:"vendas",      desc:"Colocar o link do produto com um nome chamativo.", ex:"Não seja curioso - clique aqui." },
+  { id:37, nome:"Pedido Disfarçado",                 cat:"engajamento", desc:"Pedir aos seguidores para enviarem indicações.", ex:"Queria assistir um filme bom hoje à noite. Você conhece algum?" },
+  { id:38, nome:"Triagem da Tropa",                         cat:"vendas",      desc:"Fazer triagem no público para achar os mais prontos para comprar.", ex:"Se você tem interesse em [produto] me manda 'eu quero' por inbox." },
 ];
 
 const CATS = {
@@ -426,6 +426,11 @@ body{background-color:#c0d8f0;background-image:linear-gradient(45deg,#b0cce8 25%
 .tab.on{background:linear-gradient(180deg,#4477aa 0%,#2255aa 100%);color:#fff;border-color:#2255aa;text-shadow:0 1px 1px rgba(0,0,0,.3)}
 .wb{background:#fffbe0;border:1px solid #ffcc44;border-left:3px solid #ff8800;border-radius:3px;padding:6px 10px;font-size:11px;color:#554400;margin-bottom:7px}
 .wb ul{padding-left:14px;margin-top:3px}.wb li{margin-bottom:2px}
+.int-bar{display:flex;gap:3px;margin-top:4px;align-items:center}
+.int-btn{padding:2px 7px;border-radius:10px;border:1px solid #ccc;font-size:10px;cursor:pointer;background:#f5f5f5;color:#555;transition:all .15s;white-space:nowrap}
+.int-btn.s{background:#fffbe6;border-color:#f0c040;color:#886600;font-weight:bold}
+.int-btn.m{background:#fff3e0;border-color:#ff9800;color:#cc6600;font-weight:bold}
+.int-btn.f{background:#ffeaea;border-color:#ee4444;color:#cc0000;font-weight:bold}
 .ob{background:#efffec;border:1px solid #77cc77;border-left:3px solid #33aa33;border-radius:3px;padding:6px 10px;font-size:11px;color:#1a3a1a;margin-bottom:7px}
 .hb{background:#eef8ff;border:1px solid #99ccee;border-radius:3px;padding:6px 10px;font-size:11px;color:#224466;margin-bottom:7px}
 .aib{background:linear-gradient(135deg,#f5eaff 0%,#ecdeff 100%);border:1px solid #cc88ee;border-left:3px solid #9922cc;border-radius:3px;padding:8px 10px;font-size:11px;color:#441166;margin-bottom:8px}
@@ -773,10 +778,12 @@ function AIIdeiaMural({ userData, onAplicar, onClose }) {
 
 Tipo de ideia: ${tipo}
 
+${tipo==="Urgências ocultas"?`Para "Urgências ocultas": gere dores que a audiência SENTE mas não fala abertamente — medos envergonhados, inseguranças silenciosas, frustrações que a pessoa não admite nem para si mesma. Cada ideia deve ser uma dor específica e visceral do nicho informado. Ex: "Medo de comprar mais um curso e não aplicar de novo" ou "Vergonha de não entender sobre dinheiro mesmo sendo adulto". Essas dores viram temas de sequências de conexão profunda.`:""}
+
 Responda SOMENTE com JSON:
 {
   "ideias": [
-    { "titulo": "título curto e criativo", "desc": "descrição breve de como usar essa ideia (1-2 frases)" }
+    { "titulo": "título curto e criativo", "desc": "descrição breve de como usar essa ideia em stories (1-2 frases)" }
   ]
 }`;
       const txt=await callAI(sys,prompt,userData.userId);
@@ -831,7 +838,7 @@ function StoryRow({ s, i, tot, prods, userData, onChange, onRem, onDup, onUp, on
       <div className={`sr ${open?"op":""}`} onClick={()=>setOpen(!open)}>
         <div className="sn">{i+1}</div>
         <div style={{flex:1,display:"flex",gap:10}}>
-          <div style={{flex:1}}><span style={{color:"#999",fontSize:10}}>Mecanismo: </span><span style={{fontWeight:s.mec?"bold":"normal",color:s.mec?"#222":"#aaa"}}>{s.mec||"—"}</span></div>
+          <div style={{flex:1}}><span style={{color:"#999",fontSize:10}}>Mecanismo: </span><span style={{fontWeight:s.mec?"bold":"normal",color:s.mec?"#222":"#aaa"}}>{s.mec||"—"}</span>{s.int&&<span style={{marginLeft:4,fontSize:10}}>{s.int==="s"?"🟡":s.int==="m"?"🟠":"🔴"}</span>}</div>
           <div style={{flex:1}}><span style={{color:"#999",fontSize:10}}>CTA: </span><span style={{fontWeight:s.cta?"bold":"normal",color:s.cta?"#226600":"#aaa"}}>{s.cta||"—"}</span></div>
         </div>
         <div style={{display:"flex",gap:3}} onClick={e=>e.stopPropagation()}>
@@ -862,6 +869,7 @@ function StoryRow({ s, i, tot, prods, userData, onChange, onRem, onDup, onUp, on
                 </select>
                 :<input className="fi" placeholder="Descreva o mecanismo..." value={s.mec||""} onChange={e=>onChange({...s,mec:e.target.value})}/>
               }
+              {s.mec&&<div className="int-bar"><span style={{fontSize:10,color:"#888",marginRight:2}}>Intensidade:</span>{[["s","🟡 Suave","Se não funcionou, aumente!"],["m","🟠 Médio","Bom, mas pode ir mais fundo"],["f","🔴 Fogo","Máxima força — impossível ignorar"]].map(([k,lb,tt])=><button key={k} title={tt} className={`int-btn ${s.int===k?k:""}`} onClick={e=>{e.stopPropagation();onChange({...s,int:k});}}>{lb}</button>)}</div>}
             </div>
             <div className="fg" style={{marginBottom:0}}>
               <label className="fl">CTA</label>
@@ -869,6 +877,7 @@ function StoryRow({ s, i, tot, prods, userData, onChange, onRem, onDup, onUp, on
                 <option value="">-- selecione --</option>
                 {CTAS.map(c=><option key={c}>{c}</option>)}
               </select>
+              {s.cta==="Link de vendas"&&<div style={{background:"#f0fff0",border:"1px solid #88cc88",borderRadius:3,padding:"4px 7px",fontSize:10,color:"#225522",marginTop:3,lineHeight:1.4}}>🔗 <strong>Links convertem mais com contexto.</strong> Ideal ter 3-5 recados de conversa antes deste. Repita o link em outros stories — a Kátia repetiu 8x e o 8º teve mais cliques que o 1º.</div>}
             </div>
           </div>
           {prods.length>0&&(
@@ -939,8 +948,9 @@ function ComDetail({ com, setSeqs, prods, userData, onBack }) {
           )}
           {tab==="diario"&&(
             <div>
-              <div className="hb">📔 Preencha após publicar para registrar e evoluir!</div>
-              <table className="ot" style={{marginBottom:10}}><thead><tr><th>Métrica</th><th>Valor</th></tr></thead><tbody><tr><td>Visualizações do 1º story</td><td><input className="fi" type="number" style={{width:90}} value={ls.v1||""} onChange={e=>sv({...ls,v1:e.target.value})} placeholder="0"/></td></tr><tr><td>Visualizações do último story</td><td><input className="fi" type="number" style={{width:90}} value={ls.vl||""} onChange={e=>sv({...ls,vl:e.target.value})} placeholder="0"/></td></tr><tr><td>Soma de respostas (inbox)</td><td><input className="fi" type="number" style={{width:90}} value={ls.resp||""} onChange={e=>sv({...ls,resp:e.target.value})} placeholder="0"/></td></tr><tr><td>Inboxes recebidos</td><td><input className="fi" type="number" style={{width:90}} value={ls.inbox||""} onChange={e=>sv({...ls,inbox:e.target.value})} placeholder="0"/></td></tr><tr><td>Qual story gerou mais reação? (nº)</td><td><input className="fi" type="number" style={{width:90}} value={ls.topStory||""} onChange={e=>sv({...ls,topStory:e.target.value})} placeholder="ex: 4"/></td></tr><tr><td>Houve venda direta?</td><td><select className="fs" style={{width:90}} value={ls.vendeu||""} onChange={e=>sv({...ls,vendeu:e.target.value})}><option value="">—</option><option>Sim</option><option>Não</option></select></td></tr><tr><td>Quantidade de vendas</td><td><input className="fi" type="number" style={{width:90}} value={ls.qtdVenda||""} onChange={e=>sv({...ls,qtdVenda:e.target.value})} placeholder="0"/></td></tr><tr><td><strong>Taxa de retenção</strong></td><td><strong style={{color:"#226600",fontSize:13}}>{ls.v1&&ls.vl?`${((ls.vl/ls.v1)*100).toFixed(1)}%`:"—"}</strong></td></tr></tbody></table>
+              <div className="hb">📔 <strong>Debriefing da sequência</strong> — Preencha após publicar. Gabriel Vilas Boas dizia: "Toda quinta eu sei que bato 50k views porque preenchi a planilha." O que você metrifica, você repete!</div>
+              {(ls.v1||ls.inbox||ls.vendeu)&&<div style={{display:"flex",gap:6,marginBottom:8,flexWrap:"wrap"}}>{ls.v1&&ls.vl&&<div style={{background:"#e8f4ff",border:"1px solid #aaccee",borderRadius:4,padding:"5px 10px",flex:1,minWidth:90,textAlign:"center"}}><div style={{fontSize:18,fontWeight:"bold",color:"#2255aa"}}>{((ls.vl/ls.v1)*100).toFixed(0)}%</div><div style={{fontSize:9,color:"#667"}}>Retenção</div></div>}{ls.inbox&&<div style={{background:"#fff3e0",border:"1px solid #ffcc88",borderRadius:4,padding:"5px 10px",flex:1,minWidth:90,textAlign:"center"}}><div style={{fontSize:18,fontWeight:"bold",color:"#cc6600"}}>{ls.inbox}</div><div style={{fontSize:9,color:"#667"}}>Inboxes</div></div>}{ls.vendeu==="Sim"&&ls.qtdVenda&&<div style={{background:"#f0fff0",border:"1px solid #88cc88",borderRadius:4,padding:"5px 10px",flex:1,minWidth:90,textAlign:"center"}}><div style={{fontSize:18,fontWeight:"bold",color:"#226600"}}>{ls.qtdVenda}</div><div style={{fontSize:9,color:"#667"}}>Vendas</div></div>}{ls.topStory&&<div style={{background:"#fdf0ff",border:"1px solid #cc88ee",borderRadius:4,padding:"5px 10px",flex:1,minWidth:90,textAlign:"center"}}><div style={{fontSize:18,fontWeight:"bold",color:"#771199"}}>#{ls.topStory}</div><div style={{fontSize:9,color:"#667"}}>Story estrela</div></div>}</div>}
+<table className="ot" style={{marginBottom:10}}><thead><tr><th>Métrica</th><th>Valor</th></tr></thead><tbody><tr><td>Visualizações do 1º story</td><td><input className="fi" type="number" style={{width:90}} value={ls.v1||""} onChange={e=>sv({...ls,v1:e.target.value})} placeholder="0"/></td></tr><tr><td>Visualizações do último story</td><td><input className="fi" type="number" style={{width:90}} value={ls.vl||""} onChange={e=>sv({...ls,vl:e.target.value})} placeholder="0"/></td></tr><tr><td>Soma de respostas (inbox)</td><td><input className="fi" type="number" style={{width:90}} value={ls.resp||""} onChange={e=>sv({...ls,resp:e.target.value})} placeholder="0"/></td></tr><tr><td>Inboxes recebidos</td><td><input className="fi" type="number" style={{width:90}} value={ls.inbox||""} onChange={e=>sv({...ls,inbox:e.target.value})} placeholder="0"/></td></tr><tr><td>Qual story gerou mais reação? (nº)</td><td><input className="fi" type="number" style={{width:90}} value={ls.topStory||""} onChange={e=>sv({...ls,topStory:e.target.value})} placeholder="ex: 4"/></td></tr><tr><td>Houve venda direta?</td><td><select className="fs" style={{width:90}} value={ls.vendeu||""} onChange={e=>sv({...ls,vendeu:e.target.value})}><option value="">—</option><option>Sim</option><option>Não</option></select></td></tr><tr><td>Quantidade de vendas</td><td><input className="fi" type="number" style={{width:90}} value={ls.qtdVenda||""} onChange={e=>sv({...ls,qtdVenda:e.target.value})} placeholder="0"/></td></tr><tr><td><strong>Taxa de retenção</strong></td><td><strong style={{color:"#226600",fontSize:13}}>{ls.v1&&ls.vl?`${((ls.vl/ls.v1)*100).toFixed(1)}%`:"—"}</strong></td></tr></tbody></table>
               <div className="fr"><div className="fg"><label className="fl">O que conectou? (mecanismos que explodiram)</label><textarea className="ft" value={ls.dbom||""} onChange={e=>sv({...ls,dbom:e.target.value})} placeholder="Ex: Story 4 com desabafo gerou 80 inboxes..."/></div><div className="fg"><label className="fl">O que melhorar?</label><textarea className="ft" value={ls.dmel||""} onChange={e=>sv({...ls,dmel:e.target.value})} placeholder="Recados que caíram muito..."/></div></div><div className="fg"><label className="fl">🔁 Você repetiria esta sequência? O quê mudaria?</label><textarea className="ft" value={ls.drep||""} onChange={e=>sv({...ls,drep:e.target.value})} placeholder="Sequências que funcionam devem ser repetidas 2, 3, 10x no ano..."/></div>
             </div>
           )}
@@ -974,7 +984,8 @@ function Comunidades({ seqs, setSeqs, prods, userData }) {
         </div>
         <div className="bbl">
           {seqs.length===0&&<div className="ep"><div className="ei">📱</div><div className="et">Nenhuma sequência ainda</div><div className="es">Crie manualmente ou use 🤖 para gerar com IA!</div></div>}
-          {seqs.length>0&&(<table className="ot"><thead><tr><th>Comunidade</th><th>Tipo</th><th>Recados</th><th>Status</th><th>Data</th><th>Ações</th></tr></thead><tbody>{seqs.map(s=>(<tr key={s.id}><td><span style={{fontWeight:"bold",color:"#2255aa",cursor:"pointer"}} onClick={()=>setDet(s.id)}>{s.nome}</span></td><td style={{color:"#666"}}>{s.tipo||"—"}</td><td style={{textAlign:"center"}}>{(s.stories||[]).length}</td><td><span className={`sbl ${sbm[s.status||"Rascunho"]}`}/>{s.status||"Rascunho"}</td><td style={{color:"#666"}}>{s.data?new Date(s.data).toLocaleDateString("pt-BR"):"—"}</td><td><div style={{display:"flex",gap:3}}><button className="btn bl bsm" onClick={()=>setDet(s.id)}>▶ abrir</button><button className="btn brd bsm" onClick={()=>{if(confirm("Remover?"))setSeqs(x=>x.filter(q=>q.id!==s.id));}}>✕</button></div></td></tr>))}</tbody></table>)}
+          {seqs.length>0&&seqs.filter(s=>s.status==="No Ar"||s.status==="Gravando").length<=1&&<div style={{background:"#f0f8ff",border:"1px solid #99ccee",borderLeft:"3px solid #4488cc",borderRadius:3,padding:"7px 10px",fontSize:11,color:"#224466",marginBottom:8}}><strong>💡 Dica de múltiplas sequências:</strong> Os melhores resultados vêm de 2-3 sequências rodando em paralelo — uma de engajamento, uma de aquecimento e uma de venda. A Luciana Sarava fez a mesma captação 3x no mesmo mês. O Gabriel tinha 10 publicações rodando ao mesmo tempo. <span style={{color:"#2255aa",cursor:"pointer",textDecoration:"underline"}} onClick={()=>setShow(true)}>Criar nova sequência →</span></div>}
+{seqs.length>0&&(<table className="ot"><thead><tr><th>Comunidade</th><th>Tipo</th><th>Recados</th><th>Status</th><th>Data</th><th>Ações</th></tr></thead><tbody>{seqs.map(s=>(<tr key={s.id}><td><span style={{fontWeight:"bold",color:"#2255aa",cursor:"pointer"}} onClick={()=>setDet(s.id)}>{s.nome}</span></td><td style={{color:"#666"}}>{s.tipo||"—"}</td><td style={{textAlign:"center"}}>{(s.stories||[]).length}</td><td><span className={`sbl ${sbm[s.status||"Rascunho"]}`}/>{s.status||"Rascunho"}</td><td style={{color:"#666"}}>{s.data?new Date(s.data).toLocaleDateString("pt-BR"):"—"}</td><td><div style={{display:"flex",gap:3}}><button className="btn bl bsm" onClick={()=>setDet(s.id)}>▶ abrir</button><button className="btn bw bsm" title="Duplicar sequência para repetir com variação" onClick={()=>{const nova={...s,id:uid(),nome:s.nome+" (variação)",status:"Rascunho",stories:(s.stories||[]).map(st=>({...st,id:uid()})),data:""};setSeqs(x=>[...x,nova]);setTimeout(()=>setDet(nova.id),50);}}>↩ repetir</button><button className="btn brd bsm" onClick={()=>{if(confirm("Remover?"))setSeqs(x=>x.filter(q=>q.id!==s.id));}}>✕</button></div></td></tr>))}</tbody></table>)}
         </div>
       </div>
       {show&&(<div className="mo" onClick={e=>e.target===e.currentTarget&&setShow(false)}><div className="md"><div className="mh">📱 Nova comunidade <button className="btn bw bsm" onClick={()=>setShow(false)}>✕</button></div><div className="mb"><div className="fg"><label className="fl">Nome *</label><input className="fi" placeholder="Ex: Lançamento de março" value={form.nome} onChange={e=>setForm(f=>({...f,nome:e.target.value}))}/></div><div className="fr"><div className="fg"><label className="fl">Tipo</label><select className="fs" value={form.tipo} onChange={e=>setForm(f=>({...f,tipo:e.target.value}))}><option value="">-- selecione --</option>{TIPOS_COM.map(t=><option key={t}>{t}</option>)}</select></div><div className="fg"><label className="fl">Cadência</label><select className="fs" value={form.cadencia} onChange={e=>setForm(f=>({...f,cadencia:e.target.value}))}><option value="">-- selecione --</option><option>Alta</option><option>Baixa</option></select></div></div>{form.tipo&&TIPOS_COM_DICA[form.tipo]&&<div style={{background:"#fffbe6",border:"1px solid #f0c040",borderRadius:3,padding:"5px 8px",fontSize:10,color:"#664400",marginBottom:6,lineHeight:1.4}}>{TIPOS_COM_DICA[form.tipo]}</div>}<div className="fg"><label className="fl">🎯 O que você quer que a audiência faça no inbox?</label><select className="fs" value={form.objInbox||""} onChange={e=>setForm(f=>({...f,objInbox:e.target.value}))}><option value="">-- opcional --</option><option>Perguntar sobre o produto</option><option>Contar um resultado ou depoimento</option><option>Responder pesquisa de BI</option><option>Levantar a mão para ligação/consulta</option><option>Compartilhar história pessoal</option><option>Enviar comprovante de compra</option></select></div><div style={{display:"flex",gap:5,justifyContent:"flex-end"}}><button className="btn bw" onClick={()=>setShow(false)}>Cancelar</button><button className="btn bo" onClick={cr}>Criar ▶</button></div></div></div></div>)}
