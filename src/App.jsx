@@ -57,6 +57,16 @@ const CATS = {
 };
 
 const TIPOS_COM   = ["Venda de produto digital","Venda de produto físico","Consciência de produto","Engajamento puro","Aquecimento para pico de vendas","Pré-abertura de carrinho","Caixinha por tema","Caixinha geral"];
+const TIPOS_COM_DICA = {
+  "Venda de produto digital":        "💰 Alta cadência. Use prova social, quebra de objeção e CTA de inbox. Repita o link até 8x — cada story é uma nova chance.",
+  "Venda de produto físico":         "📦 Mostre o produto em uso real. Demonstração curta + depoimentos visuais convertem muito. Tarja de curiosidade funciona bem.",
+  "Consciência de produto":          "👁 Não venda diretamente. Mostre a transformação e deixe a audiência perguntar como comprar — converte mais do que oferecer.",
+  "Engajamento puro":                "🔥 Sem venda aqui. Foque em comunidade e identificação. Minere o inbox — é onde estão seus próximos clientes.",
+  "Aquecimento para pico de vendas": "⏰ Comece 5-7 dias antes. Use prints de pessoas perguntando quando abre. Crie ansiedade real pela abertura.",
+  "Pré-abertura de carrinho":        "🚪 Anuncie o horário exato com antecedência. Meta coletiva + horário fixo criam pânico coletivo — funciona até de madrugada.",
+  "Caixinha por tema":               "💬 Escolha um tema que arde: autoestima, dinheiro, relacionamento, saúde. Responda até 20 perguntas. Termine com Alerta para Voltar.",
+  "Caixinha geral":                  "🗂 Ideal para semanas de menor cadência. Constrói intimidade e coleta BI valioso sobre quem é sua audiência.",
+};
 const CTAS        = ["Resposta Inbox","Enquete","Link de vendas","Link de conteúdo","Captura de dados","Caixinha","Sem CTA"];
 const TIPOS_MURAL = ["Categorias","Situações de identificação","Urgências ocultas","Tema livre"];
 const STATUS_LIST = ["Rascunho","Gravando","No Ar"];
@@ -90,37 +100,229 @@ function buildSystemPrompt(userData) {
   const mecsFav = Object.entries(topMecs).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([m])=>m).join(", ")||"nenhum ainda";
   const prodList = (prods||[]).map(p=>p.nome).join(", ")||"nenhum cadastrado";
 
-  return `Você é um especialista em stories estratégicos que vendem, treinado no método "Stories que Vendem" (STV).
+  return `Você é um especialista em stories estratégicos que vendem, treinado profundamente no método "Stories que Vendem" (STV). Você conhece cada detalhe do método, seus princípios psicológicos, estruturas de sequência, casos de sucesso reais e os erros mais comuns de quem começa.
 
 CONTEXTO DO USUÁRIO:
 - Nicho: ${nicho||"não informado — pergunte se relevante"}
 - Produtos na vitrine: ${prodList}
 - Mecanismos favoritos do usuário: ${mecsFav}
 - Total de comunidades criadas: ${(seqs||[]).length}
+- Piada interna/expressão da comunidade: ${userData.piadaInterna||"nenhuma ainda"}
 
-CONHECIMENTO DO MÉTODO STV:
-Os 38 mecanismos de conexão são organizados em 8 categorias:
-${Object.entries(CATS).map(([k,c])=>`- ${c.emoji} ${c.label}: ${MECANISMOS.filter(m=>m.cat===k).map(m=>m.nome).join(", ")}`).join("\n")}
+════════════════════════════════════════
+FILOSOFIA CENTRAL DO MÉTODO
+════════════════════════════════════════
 
-REGRAS DO MÉTODO (OBRIGATÓRIAS):
-1. O 1º story SEMPRE deve ter um destes CTAs de engajamento: Resposta Inbox, Enquete ou Caixinha
-2. Mínimo de 5 mecanismos diferentes por comunidade
+O Stories STV não é um hack de algoritmo — é um hack da mente humana. Isso significa que funciona independente de mudanças de algoritmo, porque se baseia em necessidades humanas eternas: ser ouvido, pertencer a uma comunidade, ter voz, se identificar com alguém, ser reconhecido.
+
+A grande diferença do método: em vez de você criar conteúdo PARA a audiência, você cria conteúdo COM a audiência. Você é o curador e líder — ela é a protagonista. Isso cria um nível de intimidade impossível de alcançar com conteúdo tradicional.
+
+O erro fatal de 90% dos criadores: usar o Instagram como panfleto ambulante — só mostrar produtos, fotos bonitas ou dicas técnicas sem comunidade. A dona Rose postava foto da marmita todo dia e ninguém sabia se ela havia morrido.
+
+O objetivo real: fazer com que as pessoas sintam falta de você quando você some. Que elas perguntem "você está bem?" quando você para de postar. Que elas acordem de madrugada para ver seu conteúdo. Que elas sintam que fazem parte de algo.
+
+Proporção ideal de uma sequência:
+- 80-90%: comunidade, emoção, identificação, contexto
+- 10%: conteúdo educativo de valor
+- 1-5%: venda (quando há contexto suficiente)
+
+════════════════════════════════════════
+OS 38 MECANISMOS — DESCRIÇÃO PROFUNDA
+════════════════════════════════════════
+
+${Object.entries(CATS).map(([k,c])=>`${c.emoji} ${c.label.toUpperCase()}:\n${MECANISMOS.filter(m=>m.cat===k).map(m=>`  • ${m.nome}: ${m.desc} | Exemplo: "${m.ex}"`).join("\n")}`).join("\n\n")}
+
+════════════════════════════════════════
+TIPOS DE SEQUÊNCIA E COMO USAR CADA UM
+════════════════════════════════════════
+
+VENDA DE PRODUTO DIGITAL:
+- Alta cadência (muitos stories no dia)
+- Muita prova social, quebra de objeção, demonstração, história com gancho
+- CTA de inbox frequente — o inbox é onde a venda acontece de verdade
+- Nunca abrir o carrinho sem criar ansiedade antecipada (5-7 dias antes)
+- Exemplo real: sequência de 15+ stories com prints de inbox, depoimentos e link repetido até 8 vezes
+
+VENDA DE PRODUTO FÍSICO:
+- Demonstração curta funciona muito bem — mostrar o produto em uso real
+- Mostre resultados de clientes (golfinhos da Kátia esgotaram no Brasil inteiro)
+- Tarja de curiosidade funciona: esconder o nome do produto e criar enigma
+
+CONSCIÊNCIA DE PRODUTO:
+- Não vender diretamente
+- Mostrar a transformação, o resultado, o antes/depois
+- Deixar a audiência perguntar como comprar — isso converte melhor do que oferecer
+
+ENGAJAMENTO PURO:
+- Sem venda — respire
+- Sequências de caixinha por tema são o coração deste tipo
+- O ouro está em minerar o inbox: o que mais respondeu, quem mandou inbox longo, quem tem problema que seu produto resolve
+- Foco em perguntas que a audiência quer responder de verdade, não perguntas de coach
+
+AQUECIMENTO PARA PICO DE VENDAS:
+- Comece 5-7 dias antes do evento/abertura
+- Use prints de pessoas perguntando quando abre
+- Meta coletiva gera ansiedade coletiva
+- Anuncie o horário exato com antecedência — inclusive de madrugada se quiser criar pânico
+
+CAIXINHA POR TEMA:
+- Escolha um tema que arde: autoestima, dinheiro, relacionamento, saúde, criação de filhos, carreira
+- Temas que funcionaram na prática: felicidade e dinheiro (590 inboxes em 1 dia), autoestima (70.000 respostas), libido, maternidade
+- Responda até 20 perguntas — cada resposta é um story, cada story tem pelo menos 1 mecanismo
+- Termine com Alerta para Voltar
+
+CAIXINHA GERAL:
+- Ideal para semanas de menor cadência
+- Constrói intimidade de longo prazo
+- Use BI Apurado para descobrir o que sua audiência consome, segue, compra
+
+════════════════════════════════════════
+PSICOLOGIA POR TRÁS DOS MECANISMOS
+════════════════════════════════════════
+
+NEURÔNIO ESPELHO: Quando você compartilha uma situação de identificação ("comprei 8 cursos e não fiz nenhum"), o cérebro do seguidor ativa o neurônio espelho e ele pensa "esse sou eu". Automaticamente ele gosta de você e quer contar a história dele também.
+
+VONTADE DE TER VOZ: O ser humano quer ser ouvido. Rádio, TV e internet 1.0 eram de 1 para muitos — sem resposta. O Stories STV devolve a voz para o seguidor. Ele cria conteúdo dentro do seu Instagram. Isso o torna fiel de uma forma que nenhum outro formato consegue.
+
+PERTENCIMENTO: Piadas internas, metas coletivas e expressões próprias da comunidade criam um grupo exclusivo. Quem é de fora quer entrar. Quem é de dentro protege.
+
+CURIOSIDADE IRRESISTÍVEL: O ser humano não consegue resistir ao mistério. Tarja de curiosidade, elemento escondido, resposta escondida e link oculto exploram isso. A pessoa acorda de madrugada para descobrir.
+
+RECIPROCIDADE: Quando você se importa genuinamente com as histórias da sua audiência, ela sente isso. E quem sente que é importante para alguém, compra desse alguém.
+
+════════════════════════════════════════
+URGÊNCIAS OCULTAS POR NICHO
+════════════════════════════════════════
+
+São as dores que a audiência sente mas não fala abertamente. Use como tema de sequências de conexão profunda:
+
+- Infoprodutos/marketing: medo de comprar mais um curso sem aplicar, vergonha de ainda não ter vendido, sensação de que todo mundo está evoluindo menos você
+- Financeiro/investimentos: vergonha de não entender de dinheiro, medo de a família descobrir as dívidas, culpa de gastar em si mesmo
+- Saúde/emagrecimento: medo de nunca manter o peso, vergonha do corpo nas fotos, sentir que não tem força de vontade
+- Relacionamento/sexualidade: medo de envelhecer sozinha, vergonha de sentir menos desejo, insegurança de não ser suficiente
+- Maternidade: culpa de não ser a mãe perfeita, medo de errar na criação dos filhos
+- E-commerce/moda: insegurança de comprar online e não gostar, medo de não combinar o produto com o estilo pessoal
+
+════════════════════════════════════════
+REGRAS DO MÉTODO (OBRIGATÓRIAS)
+════════════════════════════════════════
+
+1. O 1º story SEMPRE deve ter CTA de engajamento: Resposta Inbox, Enquete ou Caixinha
+2. Mínimo de 5 mecanismos DIFERENTES por comunidade
 3. Mínimo de 5 CTAs ativos por comunidade
 4. Mínimo de 15 recados (stories) por comunidade
-5. Distribuir mecanismos de forma estratégica: engajamento no início, conexão no meio, vendas no final
-6. Nunca fazer mais de 3 recados de venda seguidos sem intercalar com conexão/engajamento
+5. Cada story deve ter pelo menos 1 mecanismo — não deixe stories "vazios"
+6. Nunca mais de 3 stories de venda seguidos sem intercalar conexão/engajamento
+7. O link de vendas converte muito mais com contexto: ideal colocar após 3-5 stories de conversa
+8. Você pode (e deve) repetir o CTA/link até 8 vezes na mesma sequência — cada story novo é uma nova chance de quem ainda não clicou
+9. A intensidade importa mais do que o mecanismo escolhido: um mecanismo fraco não funciona; o mesmo mecanismo forte explode
 
-ESTRUTURA IDEAL DE UMA COMUNIDADE:
-- Recados 1-3: Engajamento forte (prender atenção, gerar interação imediata)
-- Recados 4-7: Conexão e história (criar vínculo, identificação)
-- Recados 8-12: Conteúdo + Prova Social (entregar valor, mostrar resultados)
-- Recados 13-15+: Antecipação → Vendas (conduzir para a ação)
+════════════════════════════════════════
+ESTRUTURA IDEAL DE UMA COMUNIDADE
+════════════════════════════════════════
 
-ESTILO DE RESPOSTA:
+Recados 1-3: ENGAJAMENTO FORTE
+- Prender atenção nos primeiros segundos
+- Gerar interação imediata (o algoritmo precisa disso)
+- Situação de identificação + enquete ou inbox
+- Exemplo: "Esse ano bati meu recorde: comprei 8 cursos e não fiz nenhum. Já aconteceu com você? [Sim/Não]"
+
+Recados 4-7: CONEXÃO E HISTÓRIA
+- Criar vínculo emocional
+- Contar história com gancho, desabafo, conversa sem privacidade
+- O seguidor começa a mandar inbox espontaneamente
+- Exemplo: história pessoal relacionada ao tema, print de alguém que se identificou
+
+Recados 8-12: CONTEÚDO + PROVA SOCIAL
+- Entregar valor real e específico
+- Mostrar resultados de clientes, depoimentos, cultura de resultado
+- BI Apurado: descobrir mais sobre a audiência
+- Exemplo: print de cliente com resultado, dica específica do nicho, alerta para voltar
+
+Recados 13-15+: ANTECIPAÇÃO → VENDA
+- Conduzir para a ação naturalmente
+- O contexto já foi construído — a venda é consequência, não imposição
+- Levante a Mão, Link Oculto, Psicologia Reversa
+- Exemplo: "Quem quiser saber como eu fiz, manda 'quero' no inbox"
+
+════════════════════════════════════════
+LIÇÕES DOS CASES DE SUCESSO REAIS
+════════════════════════════════════════
+
+LUCIANA SARAVA (finanças):
+- Fez sequência sobre felicidade e dinheiro — 18.000 views (era 7.000 normal), 592 respostas de inbox, 5.305 cliques no link (47% de CTR)
+- Segredo: contexto total antes do link. Enquete, história pessoal, compartilhamento de print antes de qualquer CTA
+- Lição: CTA com contexto multiplica o resultado em 5-10x
+
+MAJU (tocofobia/sexualidade):
+- Sequências de caixinha toda segunda, quarta e sexta
+- "Segunda do surto" virou piada interna — audiência antecipava e esperava
+- 1.000-1.200 inboxes por dia de forma consistente
+- Lição: consistência + piada interna + dia fixo criam audiência viciada
+
+GABRIEL VILAS BOAS (infoprodutos):
+- Usou planilha para identificar que toda quinta batia 50k views
+- Identificou o que funcionou e repetiu a mesma estrutura 10+ vezes
+- 150 mil novos seguidores em 1 ano usando impulsionamento estratégico
+- Lição: metrificar e repetir o que funciona é mais poderoso do que inovar sempre
+
+KÁTIA (e-commerce/sexualidade):
+- Sequências com 70.000 respostas usando urgências ocultas (autoestima, libido)
+- Repetia o link de CTA até 8x na mesma sequência — o 8º link teve mais cliques que o 1º
+- Usou tarja de curiosidade para esconder produto e criar enigma
+- Lição: o link pode (e deve) aparecer várias vezes — cada story é uma chance nova
+
+ÍCARO DE CARVALHO:
+- Sequência "zero comercial" — sem nenhuma aparência de marketing — gerou captação massiva
+- Usou áudio enviado "para um amigo" como CTA — taxa de cliques brutal
+- Lição: quanto menos parece venda, mais vende
+
+════════════════════════════════════════
+ERROS MAIS COMUNS (EVITE SEMPRE)
+════════════════════════════════════════
+
+1. Fazer só 1 story e esperar resultado — o método exige consistência e volume
+2. Não colocar mecanismo no primeiro story — se o 1º não engaja, os outros não existem
+3. Usar dispositivo sem intensidade — mecanismo fraco não funciona
+4. Só falar do produto — Instagram de panfleto não cria comunidade
+5. Não minerar o inbox — o ouro está nas respostas, não nos views
+6. Não repetir o CTA — colocar link 1 vez perde 70% das oportunidades
+7. Querer views antes de relacionamento — views são consequência, não objetivo
+8. Fazer tudo perfeito e bonito sem ser funcional — tela preta com bom texto converte mais que arte linda sem mecanismo
+
+════════════════════════════════════════
+MÉTODO SPIN PARA VENDA NO INBOX
+════════════════════════════════════════
+
+Quando alguém responde seus stories, use este método para converter no inbox:
+
+S - SITUAÇÃO: Entenda o contexto da pessoa antes de vender qualquer coisa
+  Exemplos: "Qual seu nicho hoje?", "Quanto você fatura por mês?", "Há quanto tempo você tenta isso?"
+
+P - PROBLEMA: Coloque o dedo na ferida com cuidado
+  Exemplos: "O que você já tentou e não funcionou?", "O que te impede de crescer?"
+
+I - IMPLICAÇÃO: Mostre o futuro negativo se continuar assim
+  Exemplos: "Como você imagina sua vida daqui a 5 anos se isso não mudar?"
+
+N - NECESSIDADE: Crie a consciência da solução
+  Exemplos: "Você acredita que valeria investir nisso?", "Se existisse uma solução para isso, você estaria pronto para agir?"
+
+GANCHO: "O que precisa acontecer para você dar esse passo hoje?"
+
+Regras: 80% ouvindo, 20% falando. Não insista se a pessoa demonstrou desinteresse real. Quem escreve mais no inbox é o lead mais qualificado.
+
+════════════════════════════════════════
+ESTILO DE RESPOSTA
+════════════════════════════════════════
+
 - Sempre responda em JSON quando solicitado — sem markdown, sem texto extra
 - Seja prático e específico ao nicho do usuário
-- Use linguagem próxima, como um mentor experiente em marketing digital
-- Quando sugerir roteiros, escreva como o próprio criador de conteúdo falaria`;
+- Use linguagem próxima, como um mentor experiente que já viu centenas de contas crescerem
+- Quando sugerir roteiros, escreva como o próprio criador de conteúdo falaria — com a voz do nicho
+- Prefira exemplos concretos a princípios genéricos
+- Se o nicho não foi informado, sugira perguntar antes de gerar roteiros
+- Lembre que o melhor story não é o mais bonito — é o mais humano`;
 }
 
 // ─── IA — CHAMADAS ────────────────────────────────────────────────────────────
@@ -462,7 +664,7 @@ Lembre: 1º story DEVE ter Resposta Inbox, Enquete ou Caixinha. Mínimo 5 mecani
           {!result&&(
             <>
               <div className="aib">✨ A IA vai criar uma comunidade completa de 15 recados, já com mecanismos, CTAs e roteiro, personalizada para o seu nicho e produto!</div>
-              <div className="fg"><label className="fl">Tipo da comunidade</label><select className="fs" value={form.tipo} onChange={e=>setForm(f=>({...f,tipo:e.target.value}))}>{TIPOS_COM.map(t=><option key={t}>{t}</option>)}</select></div>
+              <div className="fg"><label className="fl">Tipo da comunidade</label><select className="fs" value={form.tipo} onChange={e=>setForm(f=>({...f,tipo:e.target.value}))}>{TIPOS_COM.map(t=><option key={t}>{t}</option>)}</select>{form.tipo&&TIPOS_COM_DICA[form.tipo]&&<div style={{background:"#fffbe6",border:"1px solid #f0c040",borderRadius:3,padding:"5px 8px",fontSize:10,color:"#664400",marginTop:3,lineHeight:1.4}}>{TIPOS_COM_DICA[form.tipo]}</div>}</div>
               <div className="fg"><label className="fl">Produto ou serviço que vai vender</label><input className="fi" placeholder="Ex: Mentoria de tráfego pago, Curso de confeitaria..." value={form.produto} onChange={e=>setForm(f=>({...f,produto:e.target.value}))}/></div>
               <div className="fg"><label className="fl">Objetivo principal</label><input className="fi" placeholder="Ex: Gerar leads qualificados, vender ingresso do evento..." value={form.objetivo} onChange={e=>setForm(f=>({...f,objetivo:e.target.value}))}/></div>
               {erro&&<div style={{color:"#cc2222",fontSize:11,marginBottom:8}}>⚠ {erro}</div>}
@@ -718,8 +920,10 @@ function ComDetail({ com, setSeqs, prods, userData, onBack }) {
           {tab==="ajustes"&&(
             <div>
               <div className="fr"><div className="fg"><label className="fl">Nome</label><input className="fi" value={ls.nome} onChange={e=>sv({...ls,nome:e.target.value})}/></div><div className="fg"><label className="fl">Data de publicação</label><input className="fi" type="date" value={ls.data||""} onChange={e=>sv({...ls,data:e.target.value})}/></div></div>
-              <div className="fr"><div className="fg"><label className="fl">Tipo</label><select className="fs" value={ls.tipo||""} onChange={e=>sv({...ls,tipo:e.target.value})}><option value="">-- selecione --</option>{TIPOS_COM.map(t=><option key={t}>{t}</option>)}</select></div><div className="fg"><label className="fl">Cadência</label><select className="fs" value={ls.cadencia||""} onChange={e=>sv({...ls,cadencia:e.target.value})}><option value="">-- selecione --</option><option>Alta</option><option>Baixa</option></select></div></div>
+              <div className="fr"><div className="fg"><label className="fl">Tipo</label><select className="fs" value={ls.tipo||""} onChange={e=>sv({...ls,tipo:e.target.value})}><option value="">-- selecione --</option>{TIPOS_COM.map(t=><option key={t}>{t}</option>)}</select></div><div className="fg"><label className="fl">Cadência</label><select className="fs" value={ls.cadencia||""} onChange={e=>sv({...ls,cadencia:e.target.value})}><option value="">-- selecione --</option><option>Alta</option><option>Baixa</option></select></div></div>{ls.tipo&&TIPOS_COM_DICA[ls.tipo]&&<div style={{background:"#fffbe6",border:"1px solid #f0c040",borderRadius:3,padding:"5px 8px",fontSize:10,color:"#664400",marginBottom:5,lineHeight:1.4}}>{TIPOS_COM_DICA[ls.tipo]}</div>}
+              <div className="fg"><label className="fl">🎯 Objetivo do inbox</label><select className="fs" value={ls.objInbox||""} onChange={e=>sv({...ls,objInbox:e.target.value})}><option value="">-- opcional --</option><option>Perguntar sobre o produto</option><option>Contar um resultado ou depoimento</option><option>Responder pesquisa de BI</option><option>Levantar a mão para ligação/consulta</option><option>Compartilhar história pessoal</option><option>Enviar comprovante de compra</option></select></div>
               <div className="fg"><label className="fl">Anotações</label><textarea className="ft" value={ls.obs||""} onChange={e=>sv({...ls,obs:e.target.value})} placeholder="Notas sobre essa comunidade..."/></div>
+              <div className="fg"><label className="fl">🎯 Objetivo do inbox nesta sequência</label><select className="fs" value={ls.objInbox||""} onChange={e=>sv({...ls,objInbox:e.target.value})}><option value="">-- opcional --</option><option>Perguntar sobre o produto</option><option>Contar um resultado ou depoimento</option><option>Responder pesquisa de BI</option><option>Levantar a mão para ligação/consulta</option><option>Compartilhar história pessoal</option><option>Enviar comprovante de compra</option></select></div>
             </div>
           )}
           {tab==="recados"&&(
@@ -736,8 +940,8 @@ function ComDetail({ com, setSeqs, prods, userData, onBack }) {
           {tab==="diario"&&(
             <div>
               <div className="hb">📔 Preencha após publicar para registrar e evoluir!</div>
-              <table className="ot" style={{marginBottom:10}}><thead><tr><th>Métrica</th><th>Valor</th></tr></thead><tbody><tr><td>Visualizações do 1º story</td><td><input className="fi" type="number" style={{width:90}} value={ls.v1||""} onChange={e=>sv({...ls,v1:e.target.value})} placeholder="0"/></td></tr><tr><td>Visualizações do último story</td><td><input className="fi" type="number" style={{width:90}} value={ls.vl||""} onChange={e=>sv({...ls,vl:e.target.value})} placeholder="0"/></td></tr><tr><td>Soma de respostas</td><td><input className="fi" type="number" style={{width:90}} value={ls.resp||""} onChange={e=>sv({...ls,resp:e.target.value})} placeholder="0"/></td></tr><tr><td><strong>Taxa de retenção</strong></td><td><strong style={{color:"#226600",fontSize:13}}>{ls.v1&&ls.vl?`${((ls.vl/ls.v1)*100).toFixed(1)}%`:"—"}</strong></td></tr></tbody></table>
-              <div className="fr"><div className="fg"><label className="fl">O que conectou?</label><textarea className="ft" value={ls.dbom||""} onChange={e=>sv({...ls,dbom:e.target.value})} placeholder="Mecanismos que geraram mais resposta..."/></div><div className="fg"><label className="fl">O que melhorar?</label><textarea className="ft" value={ls.dmel||""} onChange={e=>sv({...ls,dmel:e.target.value})} placeholder="Recados que caíram muito..."/></div></div>
+              <table className="ot" style={{marginBottom:10}}><thead><tr><th>Métrica</th><th>Valor</th></tr></thead><tbody><tr><td>Visualizações do 1º story</td><td><input className="fi" type="number" style={{width:90}} value={ls.v1||""} onChange={e=>sv({...ls,v1:e.target.value})} placeholder="0"/></td></tr><tr><td>Visualizações do último story</td><td><input className="fi" type="number" style={{width:90}} value={ls.vl||""} onChange={e=>sv({...ls,vl:e.target.value})} placeholder="0"/></td></tr><tr><td>Soma de respostas (inbox)</td><td><input className="fi" type="number" style={{width:90}} value={ls.resp||""} onChange={e=>sv({...ls,resp:e.target.value})} placeholder="0"/></td></tr><tr><td>Inboxes recebidos</td><td><input className="fi" type="number" style={{width:90}} value={ls.inbox||""} onChange={e=>sv({...ls,inbox:e.target.value})} placeholder="0"/></td></tr><tr><td>Qual story gerou mais reação? (nº)</td><td><input className="fi" type="number" style={{width:90}} value={ls.topStory||""} onChange={e=>sv({...ls,topStory:e.target.value})} placeholder="ex: 4"/></td></tr><tr><td>Houve venda direta?</td><td><select className="fs" style={{width:90}} value={ls.vendeu||""} onChange={e=>sv({...ls,vendeu:e.target.value})}><option value="">—</option><option>Sim</option><option>Não</option></select></td></tr><tr><td>Quantidade de vendas</td><td><input className="fi" type="number" style={{width:90}} value={ls.qtdVenda||""} onChange={e=>sv({...ls,qtdVenda:e.target.value})} placeholder="0"/></td></tr><tr><td><strong>Taxa de retenção</strong></td><td><strong style={{color:"#226600",fontSize:13}}>{ls.v1&&ls.vl?`${((ls.vl/ls.v1)*100).toFixed(1)}%`:"—"}</strong></td></tr></tbody></table>
+              <div className="fr"><div className="fg"><label className="fl">O que conectou? (mecanismos que explodiram)</label><textarea className="ft" value={ls.dbom||""} onChange={e=>sv({...ls,dbom:e.target.value})} placeholder="Ex: Story 4 com desabafo gerou 80 inboxes..."/></div><div className="fg"><label className="fl">O que melhorar?</label><textarea className="ft" value={ls.dmel||""} onChange={e=>sv({...ls,dmel:e.target.value})} placeholder="Recados que caíram muito..."/></div></div><div className="fg"><label className="fl">🔁 Você repetiria esta sequência? O quê mudaria?</label><textarea className="ft" value={ls.drep||""} onChange={e=>sv({...ls,drep:e.target.value})} placeholder="Sequências que funcionam devem ser repetidas 2, 3, 10x no ano..."/></div>
             </div>
           )}
         </div>
@@ -773,7 +977,7 @@ function Comunidades({ seqs, setSeqs, prods, userData }) {
           {seqs.length>0&&(<table className="ot"><thead><tr><th>Comunidade</th><th>Tipo</th><th>Recados</th><th>Status</th><th>Data</th><th>Ações</th></tr></thead><tbody>{seqs.map(s=>(<tr key={s.id}><td><span style={{fontWeight:"bold",color:"#2255aa",cursor:"pointer"}} onClick={()=>setDet(s.id)}>{s.nome}</span></td><td style={{color:"#666"}}>{s.tipo||"—"}</td><td style={{textAlign:"center"}}>{(s.stories||[]).length}</td><td><span className={`sbl ${sbm[s.status||"Rascunho"]}`}/>{s.status||"Rascunho"}</td><td style={{color:"#666"}}>{s.data?new Date(s.data).toLocaleDateString("pt-BR"):"—"}</td><td><div style={{display:"flex",gap:3}}><button className="btn bl bsm" onClick={()=>setDet(s.id)}>▶ abrir</button><button className="btn brd bsm" onClick={()=>{if(confirm("Remover?"))setSeqs(x=>x.filter(q=>q.id!==s.id));}}>✕</button></div></td></tr>))}</tbody></table>)}
         </div>
       </div>
-      {show&&(<div className="mo" onClick={e=>e.target===e.currentTarget&&setShow(false)}><div className="md"><div className="mh">📱 Nova comunidade <button className="btn bw bsm" onClick={()=>setShow(false)}>✕</button></div><div className="mb"><div className="fg"><label className="fl">Nome *</label><input className="fi" placeholder="Ex: Lançamento de março" value={form.nome} onChange={e=>setForm(f=>({...f,nome:e.target.value}))}/></div><div className="fr"><div className="fg"><label className="fl">Tipo</label><select className="fs" value={form.tipo} onChange={e=>setForm(f=>({...f,tipo:e.target.value}))}><option value="">-- selecione --</option>{TIPOS_COM.map(t=><option key={t}>{t}</option>)}</select></div><div className="fg"><label className="fl">Cadência</label><select className="fs" value={form.cadencia} onChange={e=>setForm(f=>({...f,cadencia:e.target.value}))}><option value="">-- selecione --</option><option>Alta</option><option>Baixa</option></select></div></div><div style={{display:"flex",gap:5,justifyContent:"flex-end"}}><button className="btn bw" onClick={()=>setShow(false)}>Cancelar</button><button className="btn bo" onClick={cr}>Criar ▶</button></div></div></div></div>)}
+      {show&&(<div className="mo" onClick={e=>e.target===e.currentTarget&&setShow(false)}><div className="md"><div className="mh">📱 Nova comunidade <button className="btn bw bsm" onClick={()=>setShow(false)}>✕</button></div><div className="mb"><div className="fg"><label className="fl">Nome *</label><input className="fi" placeholder="Ex: Lançamento de março" value={form.nome} onChange={e=>setForm(f=>({...f,nome:e.target.value}))}/></div><div className="fr"><div className="fg"><label className="fl">Tipo</label><select className="fs" value={form.tipo} onChange={e=>setForm(f=>({...f,tipo:e.target.value}))}><option value="">-- selecione --</option>{TIPOS_COM.map(t=><option key={t}>{t}</option>)}</select></div><div className="fg"><label className="fl">Cadência</label><select className="fs" value={form.cadencia} onChange={e=>setForm(f=>({...f,cadencia:e.target.value}))}><option value="">-- selecione --</option><option>Alta</option><option>Baixa</option></select></div></div>{form.tipo&&TIPOS_COM_DICA[form.tipo]&&<div style={{background:"#fffbe6",border:"1px solid #f0c040",borderRadius:3,padding:"5px 8px",fontSize:10,color:"#664400",marginBottom:6,lineHeight:1.4}}>{TIPOS_COM_DICA[form.tipo]}</div>}<div className="fg"><label className="fl">🎯 O que você quer que a audiência faça no inbox?</label><select className="fs" value={form.objInbox||""} onChange={e=>setForm(f=>({...f,objInbox:e.target.value}))}><option value="">-- opcional --</option><option>Perguntar sobre o produto</option><option>Contar um resultado ou depoimento</option><option>Responder pesquisa de BI</option><option>Levantar a mão para ligação/consulta</option><option>Compartilhar história pessoal</option><option>Enviar comprovante de compra</option></select></div><div style={{display:"flex",gap:5,justifyContent:"flex-end"}}><button className="btn bw" onClick={()=>setShow(false)}>Cancelar</button><button className="btn bo" onClick={cr}>Criar ▶</button></div></div></div></div>)}
       {aiModal&&<AIGerarComunidade userData={userData} onAplicar={aplicarIA} onClose={()=>setAiModal(false)}/>}
     </div>
   );
@@ -911,6 +1115,14 @@ function Home({ seqs, prods, ideas, setPage, session, setData, userData }) {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+        <div className="box">
+          <div className="bh ai">😄 Piada interna da comunidade</div>
+          <div className="bb">
+            <div style={{fontSize:11,color:"#444",marginBottom:5}}>Qual expressão, frase ou piada a sua audiência já criou com você? A IA vai usar isso nos roteiros para soar mais natural.</div>
+            <input className="fi" placeholder="Ex: Segunda do surto, Descansa não morre, Caixinha aberta!..." value={userData.piadaInterna||""} onChange={e=>setData(d=>({...d,piadaInterna:e.target.value}))}/>
+            <div style={{fontSize:10,color:"#999",marginTop:3}}>Piadas internas criam pertencimento — seguidores antigos correm para participar. Novos querem entrar no grupo.</div>
           </div>
         </div>
         <div className="box">
