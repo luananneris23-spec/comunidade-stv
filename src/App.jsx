@@ -593,27 +593,43 @@ function AIGerarComunidade({ userData, onAplicar, onClose }) {
     setLoading(true);setErro("");setResult(null);
     try {
       const sys=buildSystemPrompt(userData);
-      const prompt=`Crie 15 stories estratégicos. Tipo: ${form.tipo}. Produto: ${form.produto||"produto do usuário"}. Objetivo: ${form.objetivo||"gerar vendas e inbox qualificado"}.
+      const prompt=`Crie 15 stories estratégicos. Tipo: ${form.tipo}. Produto: ${form.produto||"produto do usuário"}. Objetivo específico desta sequência: ${form.objetivo||"gerar engajamento e inbox qualificado"}.
 
-PROCESSO OBRIGATÓRIO:
-1. Identifique a urgência oculta deste nicho (dor que a pessoa sente mas não fala)
-2. Caminho emocional: curiosidade → identificação → conexão → autoridade → ação
-3. Story 1: OBRIGATÓRIO Enquete com Intenção, Resposta Inbox ou Caixinha
-4. Stories 1-3: só engajamento/identificação — sem venda
-5. Stories 4-10: conexão emocional, prova, conteúdo com identificação
-6. Stories 11-15: condução natural para ação
-7. Link de venda: apareça em mínimo 3 stories da reta final
-8. Cada story começa com algo que PARA O POLEGAR em 0.5 segundo
-9. Escreva na voz humana do nicho — não copy de agência
+ATENÇÃO — PROBLEMAS QUE VOCÊ NÃO PODE COMETER:
+
+PROBLEMA 1 — REPETITIVIDADE: Cada story deve ter gatilho, tom e abordagem DIFERENTES entre si. Proibido: dois stories seguidos com o mesmo tipo de abertura, o mesmo tom emocional, ou a mesma estrutura de frase. Se o story 3 começa com pergunta, o story 4 começa com afirmação. Se o story 5 é pesado/sério, o story 6 é leve/curioso. Varie sem parar.
+
+PROBLEMA 2 — EXCESSO DE DOR: Dor é ferramenta, não identidade da sequência. O mapa emocional obrigatório é:
+  • Stories 1-3: curiosidade / leveza / identificação positiva (situações do dia a dia, não sofrimento)
+  • Stories 4-6: identificação com tensão (a dificuldade existe, mas não é o foco)
+  • Stories 7-9: transformação / possibilidade / o que muda quando resolve
+  • Stories 10-12: prova, conquista, vitória — energia positiva
+  • Stories 13-15: ação com esperança, não com medo
+
+Use dor no MÁXIMO em 3 stories da sequência inteira, e sempre seguida de possibilidade no story imediatamente seguinte.
+
+VARIEDADE OBRIGATÓRIA — use pelo menos 1 de cada bloco abaixo:
+  LEVEZA/HUMOR: situação engraçada ou constrangedora do nicho, meme verbal, piada interna
+  CURIOSIDADE: dado surpreendente, fato contra-intuitivo, pergunta que a pessoa não sabe responder
+  IDENTIFICAÇÃO POSITIVA: momento de orgulho, conquista pequena, "você já fez isso?"
+  CONEXÃO EMOCIONAL: história com resolução feliz, não com sofrimento
+  PROVOCAÇÃO INTELIGENTE: pergunta que faz a pessoa questionar uma crença que ela tinha
+  PROVA DE TRANSFORMAÇÃO: resultado real, mudança de vida, conquista de cliente/audiência
+
+FIO NARRATIVO: defina UMA pergunta central que amarra todos os stories. A audiência deve sentir que precisa chegar ao final para ter a resposta completa.
+
+Story 1: OBRIGATÓRIO — Enquete com Intenção, Resposta Inbox ou Caixinha.
+Stories com link de venda (se aplicável): mínimo 3, cada um com ângulo diferente.
+Cada story: 1 ideia + 1 emoção + 1 CTA. Texto curto. Voz humana, não copy de agência.
 
 Responda SOMENTE com JSON válido:
 {
-  "nome": "nome criativo e específico para esta comunidade",
+  "nome": "nome criativo que reflete o fio narrativo da sequência",
   "recados": [
     {
       "mec": "nome exato do mecanismo",
       "cta": "CTA específico",
-      "ideia": "gancho de abertura | desenvolvimento emocional | como pedir a ação naturalmente (escreva o texto real, específico para o nicho)"
+      "ideia": "gancho de abertura (primeira linha que para o polegar) | desenvolvimento com o tom certo para ESTA posição na sequência | CTA natural escrito como o criador fala"
     }
   ]
 }
