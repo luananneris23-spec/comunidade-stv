@@ -593,43 +593,75 @@ function AIGerarComunidade({ userData, onAplicar, onClose }) {
     setLoading(true);setErro("");setResult(null);
     try {
       const sys=buildSystemPrompt(userData);
-      const prompt=`Crie 15 stories estratégicos. Tipo: ${form.tipo}. Produto: ${form.produto||"produto do usuário"}. Objetivo específico desta sequência: ${form.objetivo||"gerar engajamento e inbox qualificado"}.
+      const prompt=`Você vai criar uma sequência de stories para o seguinte contexto:
 
-ATENÇÃO — PROBLEMAS QUE VOCÊ NÃO PODE COMETER:
+TIPO: ${form.tipo}
+PRODUTO/SERVIÇO: ${form.produto||"não informado"}
+OBJETIVO DESTA SEQUÊNCIA: ${form.objetivo||"engajar e gerar inbox qualificado"}
+NICHO: ${userData?.nicho||"não informado"}
 
-PROBLEMA 1 — REPETITIVIDADE: Cada story deve ter gatilho, tom e abordagem DIFERENTES entre si. Proibido: dois stories seguidos com o mesmo tipo de abertura, o mesmo tom emocional, ou a mesma estrutura de frase. Se o story 3 começa com pergunta, o story 4 começa com afirmação. Se o story 5 é pesado/sério, o story 6 é leve/curioso. Varie sem parar.
+━━━━━━━━━━━━━━━━━━━━━━━━
+ANTES DE ESCREVER, DECIDA:
+━━━━━━━━━━━━━━━━━━━━━━━━
 
-PROBLEMA 2 — EXCESSO DE DOR: Dor é ferramenta, não identidade da sequência. O mapa emocional obrigatório é:
-  • Stories 1-3: curiosidade / leveza / identificação positiva (situações do dia a dia, não sofrimento)
-  • Stories 4-6: identificação com tensão (a dificuldade existe, mas não é o foco)
-  • Stories 7-9: transformação / possibilidade / o que muda quando resolve
-  • Stories 10-12: prova, conquista, vitória — energia positiva
-  • Stories 13-15: ação com esperança, não com medo
+1. QUAL É O FIO NARRATIVO?
+Uma única pergunta ou tensão que amarra todos os stories. A audiência precisa sentir que se sair no meio perde a resposta. Defina isso primeiro — é o esqueleto da sequência inteira.
 
-Use dor no MÁXIMO em 3 stories da sequência inteira, e sempre seguida de possibilidade no story imediatamente seguinte.
+2. QUANTOS STORIES ESTA SEQUÊNCIA PRECISA?
+Não existe número fixo. Decida com base no tipo:
+- Engajamento puro ou caixinha: 8 a 12 stories bem executados valem mais que 15 mediocres
+- Venda direta: 12 a 16 para construir contexto antes do link
+- Aquecimento ou consciência de produto: 8 a 10 stories com fio narrativo forte
+- Use a quantidade certa. Menos é mais quando cada story tem propósito claro.
 
-VARIEDADE OBRIGATÓRIA — use pelo menos 1 de cada bloco abaixo:
-  LEVEZA/HUMOR: situação engraçada ou constrangedora do nicho, meme verbal, piada interna
-  CURIOSIDADE: dado surpreendente, fato contra-intuitivo, pergunta que a pessoa não sabe responder
-  IDENTIFICAÇÃO POSITIVA: momento de orgulho, conquista pequena, "você já fez isso?"
-  CONEXÃO EMOCIONAL: história com resolução feliz, não com sofrimento
-  PROVOCAÇÃO INTELIGENTE: pergunta que faz a pessoa questionar uma crença que ela tinha
-  PROVA DE TRANSFORMAÇÃO: resultado real, mudança de vida, conquista de cliente/audiência
+3. QUAL É O ARCO EMOCIONAL?
+Cada sequência percorre um caminho emocional. Escolha o arco que faz sentido para este tipo:
+- Curiosidade → revelação → identificação → ação
+- Identificação positiva → tensão → transformação → inspiração
+- Provocação → reflexão → prova → convite
+Não misture arcos. Um arco bem executado é mais poderoso que vários fragmentados.
 
-FIO NARRATIVO: defina UMA pergunta central que amarra todos os stories. A audiência deve sentir que precisa chegar ao final para ter a resposta completa.
+━━━━━━━━━━━━━━━━━━━━━━━━
+COMO CONSTRUIR CADA STORY:
+━━━━━━━━━━━━━━━━━━━━━━━━
 
-Story 1: OBRIGATÓRIO — Enquete com Intenção, Resposta Inbox ou Caixinha.
-Stories com link de venda (se aplicável): mínimo 3, cada um com ângulo diferente.
-Cada story: 1 ideia + 1 emoção + 1 CTA. Texto curto. Voz humana, não copy de agência.
+Cada story tem UMA função dentro do arco. Antes de escrever, saiba:
+- Qual estado emocional este story instala na audiência?
+- O que o story anterior deixou em aberto que este resolve ou aprofunda?
+- O que este story deixa em aberto para puxar ao próximo?
+
+VARIEDADE DE ABORDAGEM — nunca dois stories seguidos com o mesmo tipo:
+• Enquete / pergunta polarizadora
+• Afirmação direta que provoca reação
+• Situação de identificação do cotidiano (leve, sem drama)
+• Dado ou fato surpreendente apresentado como revelação
+• História pessoal com gancho (fragmentada — não conta tudo de uma vez)
+• Print de resultado ou depoimento comentado com emoção genuína
+• Humor: situação constrangedora real do nicho
+• Conteúdo técnico emocionalizado (dado + "isso me impactou porque...")
+• Provocação inteligente: crença comum que merece ser questionada
+• CTA de triagem antes de revelar algo importante
+
+EQUILÍBRIO EMOCIONAL — dor é uma ferramenta, não o tema:
+Use no máximo 30% dos stories em território de dificuldade/tensão.
+O restante deve circular por: leveza, curiosidade, conquista, possibilidade, identificação positiva, humor, revelação.
+
+STORY 1: sempre Enquete com Intenção, Resposta Inbox ou Caixinha.
+LINKS DE VENDA (se aplicável): cada aparição com ângulo diferente — nunca o mesmo texto duas vezes.
+VOZ: humana, direta, como o criador realmente fala. Sem copy de agência.
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+FORMATO DE RESPOSTA:
+━━━━━━━━━━━━━━━━━━━━━━━━
 
 Responda SOMENTE com JSON válido:
 {
-  "nome": "nome criativo que reflete o fio narrativo da sequência",
+  "nome": "nome que revela o fio narrativo desta sequência específica",
   "recados": [
     {
-      "mec": "nome exato do mecanismo",
-      "cta": "CTA específico",
-      "ideia": "gancho de abertura (primeira linha que para o polegar) | desenvolvimento com o tom certo para ESTA posição na sequência | CTA natural escrito como o criador fala"
+      "mec": "nome exato do mecanismo da lista",
+      "cta": "CTA específico para este story",
+      "ideia": "primeira linha que para o polegar | o que desenvolver e como (tom, ângulo, o que deixar em aberto) | como pedir a ação de forma natural"
     }
   ]
 }
