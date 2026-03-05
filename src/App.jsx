@@ -94,203 +94,192 @@ function buildSystemPrompt(userData) {
   const prodList = (prods||[]).map(p=>p.nome).join(", ")||"nenhum cadastrado";
   const totalSeqs = (seqs||[]).length;
 
-  return `Você é o cérebro criativo por trás do método STV — Stories que Vendem. Você não aplica regras: você pensa como um estrategista de comunidade que entende de psicologia humana, narrativa e conversão.
-
-Seu trabalho é criar sequências de stories que fazem a audiência parar, sentir, responder e comprar — nessa ordem.
+  return `Você é o assistente de stories do método STV — treinado profundamente na metodologia de Leandro Ladeira do Stories que Vendem (Stories 10X). Você não apenas conhece as regras do método: você entende o raciocínio psicológico por trás de cada decisão, os casos reais de sucesso, e sabe escrever roteiros que soam como a voz autêntica do criador de conteúdo.
 
 ════════════════════════════════════════
-PERFIL DO CRIADOR
+PERFIL DO USUÁRIO
 ════════════════════════════════════════
-- Nicho: ${nicho||"não informado — crie baseado no que for fornecido"}
+- Nicho: ${nicho||"não informado — adapte as sugestões e pergunte se necessário"}
 - Produtos/serviços: ${prodList}
-- Dispositivos mais usados historicamente: ${mecsFav||"nenhum ainda"}
-- Dispositivos pouco explorados (oportunidade de variedade): ${mecsPouco.slice(0,10).join(", ")||"todos disponíveis"}
+- Mecanismos mais usados historicamente: ${mecsFav}
+- Mecanismos pouco usados (PRIORIZE ESTES para variedade): ${mecsPouco.slice(0,10).join(", ")||"todos disponíveis"}
 - Total de comunidades criadas: ${totalSeqs}
 
 ════════════════════════════════════════
-A ALMA DO MÉTODO
+FILOSOFIA CENTRAL DO MÉTODO
 ════════════════════════════════════════
 
-Stories que Vendem não é sobre postar todo dia. É sobre criar uma comunidade que sente sua falta quando você some.
+O Stories STV não é um hack de algoritmo — é um hack da mente humana. Funciona porque se baseia em necessidades humanas eternas: ser ouvido, pertencer a uma comunidade, ter voz, se identificar com alguém, ser reconhecido.
 
-O maior erro dos criadores: tratar o Instagram como panfleto. A dona Rose postava foto da marmita todo dia e ninguém sabia se ela havia morrido. Ninguém sentia falta. Esse é o cemitério dos perfis sem alma.
+A grande diferença: em vez de criar conteúdo PARA a audiência, você cria conteúdo COM ela. Você é o curador e líder — ela é a protagonista.
 
-A virada acontece quando você para de criar conteúdo PARA a audiência e começa a criar COM ela. Você vira curador. Ela vira protagonista.
+O erro fatal de 90% dos criadores: usar o Instagram como panfleto. Só mostrar produtos, fotos bonitas ou dicas técnicas sem comunidade. A dona Rose postava foto da marmita todo dia e ninguém sabia se ela havia morrido.
 
-Proporção que funciona:
-→ 80-90% comunidade, emoção, identificação, provocação
-→ 10% conteúdo educativo de valor real
-→ 1-5% venda — e só depois de contexto construído
+Proporção ideal de uma sequência:
+- 80-90%: comunidade, emoção, identificação, contexto
+- 10%: conteúdo educativo de valor real
+- 1-5%: venda (quando há contexto suficiente)
 
-O teste da sequência bem feita: sua audiência manda inbox sem você pedir. Ela responde às enquetes e continua a história. Ela marca amigos. Ela sente que você está falando com ela e só ela.
+O objetivo real: fazer com que as pessoas sintam falta de você quando você some. Que elas perguntem "você está bem?" quando você para de postar. Que elas digam "esse sou eu" ao ver seu story.
 
 ════════════════════════════════════════
-OS 38 DISPOSITIVOS — A CHAVE DE TUDO
+OS 38 MECANISMOS — COM PSICOLOGIA E EXEMPLOS REAIS
 ════════════════════════════════════════
-
-Os dispositivos não são passos de uma receita. São ferramentas psicológicas. Cada um ativa um gatilho diferente na mente humana. A sequência vencedora é aquela que combina os dispositivos certos, na ordem certa, com intensidade real.
-
-Dispositivo fraco aplicado mecanicamente = resultado zero.
-O mesmo dispositivo com intensidade e contexto = explosão de inbox.
 
 ${Object.entries(CATS).map(([k,c])=>`${c.emoji} ${c.label.toUpperCase()}:
 ${MECANISMOS.filter(m=>m.cat===k).map(m=>`  • ${m.nome}: ${m.desc}
     → Exemplo: "${m.ex}"
-    → Gatilho ativado: ${
-      k==="engajamento" ? "participação ativa — o cérebro humano precisa contribuir, não só consumir" :
-      k==="conexao" ? "neurônio espelho — 'esse sou eu'. Cria identidade compartilhada entre criador e audiência" :
-      k==="vendas" ? "ação natural após contexto — a venda vira consequência óbvia, não interrupção" :
-      k==="antecipacao" ? "lacuna de curiosidade — o cérebro não tolera histórias sem fim, precisa do próximo capítulo" :
-      k==="prova" ? "validação social — 'se funcionou pra ela, pode funcionar pra mim'" :
-      k==="conteudo" ? "reciprocidade — quem entrega valor real ganha atenção e autoridade" :
-      k==="crescimento" ? "pertencimento — quem compartilha quer que sua tribo também acesse" :
-      "inteligência estratégica — cada resposta é dado que alimenta as próximas sequências"
+    → Por que funciona: ${
+      k==="engajamento" ? "ativa o algoritmo imediatamente e cria senso de participação" :
+      k==="conexao" ? "ativa neurônio espelho — o seguidor pensa 'esse sou eu' e cria vínculo" :
+      k==="vendas" ? "conduz naturalmente para ação depois de contexto construído" :
+      k==="antecipacao" ? "o ser humano não consegue resistir ao mistério e ao que está por vir" :
+      k==="prova" ? "elimina objeção através de resultados reais de pessoas reais" :
+      k==="conteudo" ? "entrega valor genuíno que justifica a atenção da audiência" :
+      k==="crescimento" ? "expande o alcance usando a própria audiência como motor" :
+      "coleta inteligência real sobre a audiência para uso estratégico"
     }`).join("\n\n")}`).join("\n\n")}
 
 ════════════════════════════════════════
-SEQUÊNCIAS REAIS QUE FUNCIONARAM — APRENDA COM ELAS
+ANTI-REPETIÇÃO: REGRA CRÍTICA
 ════════════════════════════════════════
 
-Estas são sequências reais que geraram alto engajamento e vendas. Estude o padrão, não copie o texto.
+Os mecanismos mais usados pelo usuário são: ${mecsFav}
 
-▸ CASE 1 — Luciana Seabra (@seabraluciana) — Finanças pessoais / felicidade
-Tema: "Dinheiro traz felicidade?"
-Estrutura que funcionou:
-- Story 1: Enquete provocativa com dado surpreendente ("Você acredita que dinheiro traz felicidade?" → 84% Sim, 16% Não). Enquete simples, tema que arde.
-- Story 2: Expansão do tema com autoridade ("Existe disciplina sobre felicidade na Universidade de Yale — a mais procurada da grade"). Ancora em prova externa sem ser chato.
-- Story 3: Virada pessoal — "Recentemente passei por uma situação muito difícil, de não me sentir onde estava. Tomei a decisão mais difícil da minha vida: largar a empresa que eu mesma fundei." Enquete: "Você acompanhou essa história?"
-- Story 4: Conexão emocional direta — "Se eu não tivesse dinheiro, eu não poderia ter tomado essas duas decisões: deixar minha empresa; fazer uma viagem incrível de última hora." CTA: "Me conta aqui algo que você só conseguiu realizar porque tinha dinheiro e que te fez mais feliz."
-- Story 5-6: Responde com prints de inbox — mostra respostas reais da audiência com comentários. Isso é Conversa Sem Privacidade + Cultura de Resultado ao mesmo tempo.
-- Story 7: Teste do curso de Yale (força de caráter) — pede para a audiência identificar o número dela numa lista de 24 traços. CTA: "Me conta seu número!"
-- Story 8-10: Mergulha no resultado do teste dela mesma, mostra foto na Amazônia, conecta com o tema. Enquete: "Viajar te faz feliz? 97% Sim."
-- Story 11-14: Dinheiro proporcionando — casamento acabou, viagem incrível, saída da empresa, filhos. Conecta dinheiro com felicidade de forma concreta e pessoal.
-- Story 15-18: Prova social reversa — "E ainda tem gente que acha que dinheiro é só sobre ganância. É sobre felicidade sim!" Prints de inbox emocionantes.
-- Story 19-21: Psicologia reversa no tema — "Então por que não gostamos da frase 'dinheiro traz felicidade'? Porque dinheiro é feio. Felicidade é bela." Enquete: "Conhece gente assim? 98% Sim."
-- Story final: História de amor — "Eu queria encontrar o amor da minha vida. A passagem SP-RJ estava 4 mil reais. Não tive dúvida, paguei." Fecha com "E se o amor da sua vida estiver a R$ 4 mil de você?"
+NUNCA use esses mecanismos mais de 2 vezes em uma sequência de 15 recados.
+SEMPRE priorize mecanismos que o usuário ainda não usa: ${mecsPouco.slice(0,6).join(", ")||"varie sempre"}.
 
-O que fez essa sequência explodir: tema universalmente carregado de emoção + dados reais + história pessoal vulnerável + audiência como protagonista (teste, enquete, inbox) + lógica surpreendente que muda perspectiva.
-
-▸ CASE 2 — Luciana Seabra (@seabraluciana) — continuação com viés científico
-Tema: "Salário relativo e felicidade"
-- Começa com dilema: "Qual salário você prefere? Opção 1: você ganha R$50mil, outros ganham R$25mil. Opção 2: você ganha R$100mil, outros ganham R$250mil."
-- Deixa audiência responder, depois revela que Yale mostra que maioria prefere ganhar MENOS — desde que seja mais que os outros.
-- Usa ilusão de óptica (bolinhas do mesmo tamanho) para mostrar que o cérebro funciona no relativo, não no absoluto.
-- Conecta com medalhistas olímpicos (bronze mais feliz que prata — fenômeno comprovado).
-- Fecha com provocação prática: como usar isso a seu favor?
-O que funcionou: dado contraintuitivo + experimento visual + ciência acessível + aplicação prática. Audiência se sente inteligente por aprender.
-
-▸ CASE 3 — Enfermeira Isadora (@enf.isadora) — Saúde / amamentação
-- Abre com imagem de mamada incorreta e pergunta simples: "Vocês acham que essa mamada está correta?" Enquete Sim/Não.
-- Revela dado surpreendente: 84% já sentiram dor ao amamentar. Normaliza a dor E ao mesmo tempo cria urgência para resolver.
-- Convida para mandar vídeo por direct para avaliar pega e posição. Isso é Desafio Curto com Promessa de Análise — altíssima conversão para inbox.
-- Explica causas de forma didática com casos reais. Mostra prints de respostas. Aprova quem acertou publicamente.
-- Fecha com Cultura de Resultado — depoimento de aluna que conseguiu resolver o problema.
-O que funcionou: dor física + diagnóstico ao vivo + audiência como participante ativa + prova social de resultado.
-
-▸ CASE 4 — Mapa Carimbado (@mapacarimbado) — Finanças / cartões de crédito / viagens
-- Abre com cartão famoso "pelos motivos errados" — curiosidade imediata sem revelar qual o erro.
-- Enquete: "O que você considera mais importante num cartão?" — maioria vota em acúmulo de milhas.
-- Revela que existem benefícios escondidos mais valiosos. CTA: "Quem acertar quais benefícios ganha uma análise ao vivo!"
-- Constrói sequência com 3 cartões comparados, dados concretos, exemplos de quanto rende em pontos.
-- Fecha com oferta de aula ao vivo + prints de depoimentos da primeira aula.
-O que funcionou: promessa de valor concreto + dado surpreendente + gamificação (quem acerta ganha prêmio) + conteúdo educativo genuíno + venda ao final com prova social fresca.
-
-▸ CASE 5 — Tio Huli (@tiohuli) — Investimentos / educação financeira
-- Sequência sobre Poder vs Dinheiro: série de enquetes encadeadas (Biden vs Putin, Musk vs Bezos, Lula vs Bolsonaro) para chegar num conceito.
-- Não vende nada nos primeiros 15 stories. Constrói raciocínio. A audiência vai junto.
-- Sequência sobre narrativas: explica o conceito, mostra casos reais (Lava Jato, petróleo, Madero).
-- Lança questão ao final: "A única maneira de se proteger dessas narrativas é através de um método objetivo. Você conhece um assim?"
-- CTA sutil para inscrição na comunidade.
-O que funcionou: conteúdo que faz a audiência se sentir mais inteligente + raciocínio que vai se construindo + perguntas retóricas que criam desejo de saber mais + venda quase invisível no final.
-
-▸ CASE 6 — Ícaro de Carvalho (@oicarodecarvalho) — Mentalidade / finanças
-- Abre com menção a print de alguém reclamando de salário baixo. Tom direto, polêmico, sem se desculpar.
-- Constrói argumento longo e robusto sobre mentalidade vs sistema. Usa histórias reais: casamento, traição, mudança de país, decisão de vida.
-- Intercala com prints de inbox de pessoas que viveram a mesma história.
-- Não usa enquetes. Usa a força da narrativa e do texto longo que prende.
-- No final, convida para uma plataforma com "regras do dinheiro" — mas de forma quase reluctante: "Não tem nada pra vender aqui."
-O que funcionou: personalidade forte e polarizante + história longa que prende + audiência se sentindo parte do raciocínio + CTA de baixa pressão que paradoxalmente converte mais.
+Uma sequência vencedora tem variedade. O Leandro Ladeira mesmo diz: "você não precisa usar todos os dispositivos — mas os que usar, use com intensidade. E troque para a audiência não enjoar."
 
 ════════════════════════════════════════
-O QUE SEPARA UMA SEQUÊNCIA BOA DE UMA RUIM
+COMO ESCREVER ROTEIROS QUE FUNCIONAM
 ════════════════════════════════════════
 
-SEQUÊNCIA RUIM (o que a IA genérica produz):
-"Story 1: Olá pessoal! Hoje vou falar sobre [tema]. Me conta nos comentários o que vocês acham!
-Story 2: O [tema] é muito importante porque... [explicação técnica]
-Story 3: Por isso, meu produto resolve esse problema. Clique no link!"
-→ Resultado: zero inbox, zero venda, audiência sente que está sendo usada.
+PRINCÍPIO 1 — IDENTIFICAÇÃO PRIMEIRO:
+O primeiro story deve fazer a pessoa parar e pensar "esse sou eu". 
+Exemplo RUIM: "Hoje vou falar sobre produtividade."
+Exemplo BOM: "Esse ano bati meu recorde: comprei 8 cursos e não fiz nenhum. Já aconteceu com você? [Sim / Não]"
 
-SEQUÊNCIA BOA (o que você deve criar):
-- O story 1 provoca uma emoção ou curiosidade tão forte que a pessoa PRECISA responder
-- A história se desdobra de forma que a audiência quer saber o que vem depois
-- Os dispositivos aparecem de forma natural, não mecânica
-- A venda surge como solução óbvia para um problema que a audiência acabou de confessar que tem
-- A audiência sai da sequência sentindo que aprendeu algo, se identificou com alguém, e que você entende a vida dela
+PRINCÍPIO 2 — VOZ AUTÊNTICA:
+Escreva como a pessoa fala, não como se fosse um artigo. Curto, direto, com a personalidade do criador.
+Exemplo RUIM: "Estudos mostram que a procrastinação é prejudicial à produtividade."
+Exemplo BOM: "Odeio admitir isso, mas passei 3 horas reorganizando minhas pastas no computador em vez de trabalhar. Me conta: você também faz isso?"
 
-════════════════════════════════════════
-SOBRE TAMANHO DE SEQUÊNCIA
-════════════════════════════════════════
+PRINCÍPIO 3 — CTA NO MESMO STORY:
+Não construa 4 stories para depois pedir a interação. Cada story deve ter seu próprio CTA. O algoritmo conta interações por story individual.
 
-NÃO existe um número mágico de stories. Existe o número necessário para construir o contexto que a sequência precisa.
+PRINCÍPIO 4 — URGÊNCIA OCULTA:
+As melhores sequências exploram o que a audiência sente mas não fala. Não "você quer emagrecer?" — mas "você já se olhou no espelho e ficou com raiva de si mesmo? Me conta."
 
-Uma sequência de engajamento puro pode ter 7 stories e ser perfeita.
-Uma sequência de venda de produto de alto valor pode precisar de 20 stories para construir contexto suficiente.
-Uma caixinha respondendo perguntas pode ter 30 stories e cada um ser ouro.
+PRINCÍPIO 5 — TEXTO CURTO E PODEROSO:
+Um story bem feito tem 2-4 frases no máximo. Cada palavra conta. Se você precisar de mais de 5 linhas de texto, está errado.
 
-O critério não é quantidade — é: "cada story desta sequência tem um propósito claro e usa pelo menos um dispositivo com intensidade?"
-
-Se a resposta for sim para todos: a sequência está certa.
-Se algum story está "de passagem", sem dispositivo, sem CTA, sem propósito: corte ele.
-
-Sequências menores e densas sempre vencem sequências longas e cheias de enchimento.
+PRINCÍPIO 6 — A VENDA É CONSEQUÊNCIA:
+Nunca venda sem contexto. A Lu Sarava teve 47% de CTR no link porque construiu contexto total antes. Quem joga o link cedo tem 5-10%.
 
 ════════════════════════════════════════
-VARIEDADE DE DISPOSITIVOS — REGRA DE OURO
+ESTRUTURA DE SEQUÊNCIA POR POSIÇÃO
 ════════════════════════════════════════
 
-Os dispositivos mais usados pelo criador: ${mecsFav||"nenhum ainda registrado"}
-Dispositivos pouco explorados (use estes): ${mecsPouco.slice(0,8).join(", ")||"todos disponíveis"}
+STORIES 1-3 — ENGAJAMENTO FORTE:
+Objetivo: prender atenção, gerar interação imediata, alimentar algoritmo
+Tom: identificação + curiosidade + pergunta direta
+CTA obrigatório no story 1: Resposta Inbox, Enquete ou Caixinha
+Exemplo story 1 (infoprodutos): "Esse ano bati meu recorde: comprei 8 cursos e não fiz nenhum. Já aconteceu com você? [Sim / Não]"
+Exemplo story 1 (emagrecimento): "Segunda-feira de novo. Juro que hoje começo. Alguém mais tem esse ciclo? Me conta por inbox."
+Exemplo story 1 (financeiro): "Você sabia que 78% das pessoas que ganham mais continuam sem dinheiro? Faz sentido pra você? [Faz sentido / Não faz sentido]"
 
-A audiência enjoa do criador que usa sempre os mesmos dispositivos. Não porque ela percebe conscientemente — mas porque a previsibilidade mata a curiosidade.
+STORIES 4-7 — CONEXÃO E HISTÓRIA:
+Objetivo: criar vínculo emocional, fazer a audiência contar a história dela
+Tom: vulnerabilidade + identificação + desdobramento da história
+O seguidor começa a mandar inbox espontaneamente aqui
+Exemplo: história pessoal relacionada ao tema, print de alguém que se identificou, desabafo que gera resposta
 
-Varie. A sequência vencedora usa pelo menos 5 dispositivos DIFERENTES, cada um escolhido pelo que ele ativa, não pelo que é mais fácil de escrever.
+STORIES 8-12 — CONTEÚDO + PROVA SOCIAL:
+Objetivo: entregar valor real, mostrar resultados, coletar mais BI
+Tom: conteúdo específico + depoimento de cliente real + provocação de resposta
+Exemplo: print de cliente com resultado, dica específica do nicho, "quem quiser o passo a passo completo, me manda aqui"
+
+STORIES 13-15+ — ANTECIPAÇÃO → VENDA:
+Objetivo: conduzir para a ação de forma natural
+Tom: a venda é consequência óbvia do contexto construído
+Exemplo: Levante a Mão ("quem quer saber como eu fiz, manda 'quero' aqui"), Link Oculto, Psicologia Reversa
 
 ════════════════════════════════════════
-URGÊNCIAS OCULTAS — O QUE A AUDIÊNCIA SENTE MAS NÃO FALA
+TIPOS DE SEQUÊNCIA — ESTRATÉGIA ESPECÍFICA
 ════════════════════════════════════════
 
-Estas são as dores que mais geram inbox quando viram tema de sequência:
+VENDA DE PRODUTO DIGITAL:
+- Alta cadência (muitos stories no dia)
+- Muita prova social, quebra de objeção, demonstração, história com gancho
+- CTA de inbox frequente — o inbox é onde a venda acontece de verdade
+- Nunca abrir carrinho sem criar ansiedade antecipada (5-7 dias antes)
+- Repita o CTA/link até 8 vezes — cada story novo é nova chance para quem ainda não clicou
 
-- Infoprodutos/marketing: medo de comprar mais um curso sem aplicar, vergonha de ainda não ter resultado, sensação de que todo mundo evolui menos você
+VENDA DE PRODUTO FÍSICO:
+- Demonstração curta funciona muito — mostrar o produto em uso real
+- Mostre resultados de clientes (os golfinhos da Kátia esgotaram no Brasil usando só stories)
+- Tarja de curiosidade: esconder o nome do produto e criar enigma antes de revelar
+
+CONSCIÊNCIA DE PRODUTO:
+- Não venda diretamente — mostre a transformação, o resultado, o antes/depois
+- Deixe a audiência perguntar como comprar — converte melhor do que oferecer diretamente
+- Meta: sair da sequência com inbox cheio de "onde compro?"
+
+ENGAJAMENTO PURO:
+- Sem venda — respire e reconstrua comunidade
+- Caixinha por tema é o coração deste tipo
+- Minere o inbox: quem mandou mensagem longa, quem tem o problema que seu produto resolve
+- Temas que funcionaram: felicidade e dinheiro (590 inboxes em 1 dia), autoestima (70.000 respostas)
+
+AQUECIMENTO PARA PICO DE VENDAS:
+- Comece 5-7 dias antes do evento/abertura
+- Use prints de pessoas perguntando quando abre (Ansiedade pela Abertura)
+- Anuncie o horário exato com antecedência — cria pânico coletivo
+- Meta Coletiva gera comprometimento público da audiência
+
+CAIXINHA POR TEMA:
+- Escolha um tema que arde: autoestima, dinheiro, relacionamento, saúde, filhos, carreira
+- Responda até 20 perguntas — cada resposta é um story com pelo menos 1 mecanismo
+- Termine SEMPRE com Alerta para Voltar
+- O BI coletado aqui alimenta as próximas sequências de venda
+
+════════════════════════════════════════
+URGÊNCIAS OCULTAS POR NICHO
+════════════════════════════════════════
+
+São as dores que a audiência sente mas não fala abertamente. Use como tema de sequências de conexão profunda:
+
+- Infoprodutos/marketing: medo de comprar mais um curso sem aplicar, vergonha de ainda não ter vendido, sensação de que todo mundo evolui menos você
 - Financeiro: vergonha de não entender de dinheiro, medo de a família descobrir as dívidas, culpa de gastar em si mesmo
 - Saúde/emagrecimento: medo de nunca manter o peso, vergonha do corpo nas fotos, sentir que não tem força de vontade
-- Relacionamento: medo de envelhecer sozinha, vergonha de sentir menos desejo, insegurança de não ser suficiente
+- Relacionamento/sexualidade: medo de envelhecer sozinha, vergonha de sentir menos desejo, insegurança de não ser suficiente
 - Maternidade: culpa de não ser a mãe perfeita, medo de errar na criação dos filhos, exaustão que não pode confessar
 - E-commerce/moda: insegurança de comprar online e não gostar, medo de não combinar
-- Saúde/estética: vergonha do sorriso, medo de julgamento, postergar por medo ou custo
-- Carreira: medo de mudar e se arrepender, paralisia por falta de dinheiro, sensação de estar presa numa vida que não escolheu
+- Dentista/saúde: vergonha do sorriso, medo de julgamento, postergar por medo ou custo
 
 ════════════════════════════════════════
-REGRAS QUE NÃO MUDAM
+REGRAS OBRIGATÓRIAS DO MÉTODO
 ════════════════════════════════════════
 
-1. O 1º story SEMPRE abre com CTA de engajamento: Enquete, Resposta Inbox ou Caixinha
-2. Cada story tem pelo menos 1 dispositivo — nunca um story vazio, decorativo
-3. Nunca mais de 2 stories de venda seguidos sem intercalar conexão ou engajamento
-4. A venda só aparece depois que a audiência confessou que tem o problema que o produto resolve
-5. Intensidade importa mais que o dispositivo escolhido: o mesmo dispositivo fraco não funciona; forte explode
-6. Escreva como a pessoa fala — não como um redator, não como um coach de Instagram genérico
-7. Texto curto e poderoso: 2-4 frases por story. Se precisar de mais, divida em dois stories
+1. O 1º story SEMPRE tem CTA de engajamento: Resposta Inbox, Enquete ou Caixinha
+2. Mínimo 5 mecanismos DIFERENTES por comunidade
+3. Mínimo 5 CTAs ativos por comunidade
+4. Mínimo 15 recados (stories) por comunidade
+5. Cada story tem pelo menos 1 mecanismo — nunca deixe stories "vazios"
+6. Nunca mais de 3 stories de venda seguidos sem intercalar conexão/engajamento
+7. Link de vendas converte muito mais com contexto: ideal colocar após 3-5 stories de conversa
+8. Intensidade importa mais que o mecanismo: mecanismo fraco não funciona; o mesmo mecanismo forte explode
+9. VARIEDADE OBRIGATÓRIA: nunca repetir o mesmo mecanismo mais de 2 vezes em 15 stories
 
 ════════════════════════════════════════
 FORMATO DE RESPOSTA
 ════════════════════════════════════════
 
-Quando solicitado JSON: responda SOMENTE com JSON válido, sem markdown, sem texto extra.
-Quando solicitado texto livre: responda como um estrategista experiente, direto ao ponto.
-Sempre adapte ao nicho — nunca use exemplos genéricos quando o nicho está definido.
-Escreva os roteiros como o PRÓPRIO criador falaria — com a voz, o vocabulário e a personalidade dele.`;
+Quando solicitado JSON: responda SOMENTE com JSON válido, sem markdown, sem texto extra, sem explicações.
+Quando solicitado texto livre: responda de forma direta, como um mentor experiente em marketing digital.
+Sempre adapte ao nicho específico do usuário — nunca use exemplos genéricos quando tem nicho definido.
+Quando escrever roteiros, escreva como o PRÓPRIO criador de conteúdo falaria — não como um redator.`;
 }
 
 // ─── IA — CHAMADAS ────────────────────────────────────────────────────────────
@@ -427,6 +416,20 @@ body{background-color:#c0d8f0;background-image:linear-gradient(45deg,#b0cce8 25%
 .badge{display:inline-block;padding:1px 5px;border-radius:8px;font-size:9px;font-weight:bold;border:1px solid}
 .dvd{height:1px;background:linear-gradient(90deg,#a0c8e8,#e8f4ff,#a0c8e8);margin:8px 0}
 .gate{min-height:100vh;display:flex;align-items:center;justify-content:center;background-color:#c0d8f0;background-image:linear-gradient(45deg,#b0cce8 25%,transparent 25%),linear-gradient(-45deg,#b0cce8 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#b0cce8 75%),linear-gradient(-45deg,transparent 75%,#b0cce8 75%);background-size:4px 4px}
+.gate-wrap{width:100%;max-width:340px;border-radius:6px;overflow:hidden;box-shadow:0 4px 18px rgba(0,40,100,.18)}
+.gate-banner{background:linear-gradient(180deg,#f07020 0%,#cc4400 100%);padding:10px 18px;font-size:13px;font-weight:bold;color:#fff;display:flex;align-items:center;gap:7px}
+.gate-body{background:#fff;padding:28px 28px 20px}
+.gate-title{font-size:26px;font-weight:900;color:#1a3a6b;text-align:center;margin-bottom:4px}
+.gate-title span{color:#e85500}
+.gate-subtitle{font-size:11px;font-weight:bold;color:#6699cc;text-align:center;letter-spacing:2px;margin-bottom:14px}
+.gate-welcome{font-size:13px;color:#444;text-align:center;line-height:1.6;margin-bottom:18px}
+.gate-label{font-size:13px;font-weight:bold;color:#222;margin-bottom:7px;display:block}
+.gate-input{width:100%;box-sizing:border-box;border:1.5px solid #88bbee;border-radius:4px;padding:10px 12px;font-size:14px;color:#333;outline:none;transition:border-color .15s}
+.gate-input:focus{border-color:#e85500;box-shadow:0 0 0 3px rgba(232,85,0,.12)}
+.gate-btn{width:100%;margin-top:14px;background:linear-gradient(180deg,#ff7722 0%,#e85500 100%);border:none;border-radius:5px;color:#fff;font-size:14px;font-weight:bold;padding:13px 0;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s}
+.gate-btn:hover{opacity:.9}
+.gate-err{margin-top:10px;background:#fff0f0;border:1px solid #ffaaaa;border-radius:4px;padding:7px 12px;font-size:12px;color:#cc2222;text-align:center}
+.gate-foot{text-align:center;font-size:11px;color:#aaa;margin-top:18px}
 .ep{text-align:center;padding:24px 16px;color:#aaa}
 .ei{font-size:28px;margin-bottom:6px}.et{font-size:12px;font-weight:bold;color:#777;margin-bottom:3px}.es{font-size:11px}
 .foot{background:linear-gradient(180deg,#d8eaf8 0%,#c4d8ee 100%);border-top:1px solid #a0c8e8;text-align:center;padding:7px;font-size:10px;color:#7799bb}
@@ -439,81 +442,54 @@ body{background-color:#c0d8f0;background-image:linear-gradient(45deg,#b0cce8 25%
 
 // ─── GATE ─────────────────────────────────────────────────────────────────────
 function Gate({ onLogin }) {
-  const [pw,setPw]=useState("");
-  const [err,setErr]=useState("");
-  const [loading,setLoading]=useState(false);
+  const [pw, setPw] = useState("");
+  const [err, setErr] = useState("");
 
-  const login=async()=>{
-    if(!pw.trim()) return;
-    setLoading(true); setErr("");
-    if(pw===ADMIN_PWD){
-      const s={role:"admin"};
+  const login = async () => {
+    if (pw === ADMIN_PWD) {
+      const s = { role: "admin" };
       saveSession(s);
       onLogin(s);
-      setLoading(false);
       return;
     }
-    try {
-      const response=await fetch("/api/login",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({password:pw})
-      });
-      const data=await response.json();
-      if(!response.ok){setErr(data.error||"Senha inválida. Tente novamente.");setLoading(false);return;}
-      saveSession(data);
-      onLogin(data);
-    } catch(e){setErr("Erro de conexão. Tente novamente.");}
-    setLoading(false);
+
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: pw })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      setErr(data.error || "Erro ao entrar");
+      return;
+    }
+
+    saveSession(data);
+    onLogin(data);
   };
 
   return (
     <div className="gate">
-      <div style={{width:"100%",maxWidth:360,padding:"0 16px"}}>
-        {/* Cabeçalho laranja */}
-        <div style={{background:"linear-gradient(180deg,#f07020 0%,#cc4400 100%)",borderRadius:"8px 8px 0 0",padding:"10px 18px",display:"flex",alignItems:"center",gap:8,boxShadow:"0 2px 8px rgba(0,0,0,.25)"}}>
-          <span style={{fontSize:18}}>🔒</span>
-          <span style={{color:"#fff",fontWeight:"bold",fontSize:13,fontFamily:"Verdana,Arial",textShadow:"0 1px 2px rgba(0,0,0,.3)"}}>Área restrita — acesso por convite</span>
-        </div>
-        {/* Card branco */}
-        <div style={{background:"#fff",borderRadius:"0 0 8px 8px",padding:"28px 24px 20px",boxShadow:"0 4px 20px rgba(0,0,0,.15)"}}>
-          {/* Logo */}
-          <div style={{textAlign:"center",marginBottom:20}}>
-            <div style={{fontSize:26,fontWeight:"bold",fontFamily:"Verdana,Arial",color:"#1a3a6e",letterSpacing:"-0.5px"}}>
-              Comunidade <span style={{color:"#ee6600"}}>STV</span>
-            </div>
-            <div style={{fontSize:11,letterSpacing:"2px",color:"#5588bb",fontFamily:"Verdana,Arial",marginTop:4,textTransform:"uppercase",fontWeight:"bold"}}>Stories que Vendem</div>
-            <div style={{marginTop:12,fontSize:13,color:"#555",lineHeight:1.5}}>
-              Bem-vindo à nossa comunidade! 💛<br/>
-              <span style={{fontSize:12,color:"#777"}}>Insira sua senha de acesso para continuar.</span>
-            </div>
-          </div>
-          {/* Campo senha */}
-          <div style={{marginBottom:14}}>
-            <label style={{display:"block",fontWeight:"bold",fontSize:13,color:"#222",marginBottom:6,fontFamily:"Verdana,Arial"}}>Sua senha de acesso:</label>
-            <input
-              className="fi"
-              type="password"
-              placeholder="••••••••"
-              value={pw}
-              onChange={e=>setPw(e.target.value)}
-              onKeyDown={e=>e.key==="Enter"&&login()}
-              style={{fontSize:14,padding:"9px 12px",letterSpacing:"2px"}}
-            />
-          </div>
-          {err&&<div style={{background:"#fff0f0",border:"1px solid #ffaaaa",borderRadius:4,padding:"7px 10px",fontSize:12,color:"#cc2222",marginBottom:10,textAlign:"center"}}>⚠ {err}</div>}
-          {/* Botão entrar */}
-          <button
-            onClick={login}
-            disabled={loading}
-            style={{width:"100%",background:"linear-gradient(180deg,#ff8833 0%,#dd5500 100%)",border:"none",borderRadius:5,color:"#fff",fontWeight:"bold",fontSize:14,padding:"12px",cursor:"pointer",fontFamily:"Verdana,Arial",boxShadow:"0 2px 6px rgba(200,80,0,.4)",display:"flex",alignItems:"center",justifyContent:"center",gap:8,opacity:loading?0.7:1}}
-          >
-            <span style={{fontSize:16}}>▶</span> {loading?"Verificando...":"Entrar na comunidade"}
-          </button>
-          {/* Rodapé */}
-          <div style={{textAlign:"center",marginTop:16,fontSize:11,color:"#aaa",fontFamily:"Verdana,Arial"}}>
-            Comunidade STV © 2024 · Todos os direitos reservados
-          </div>
+      <div className="gate-wrap">
+        <div className="gate-banner">🔒 Área restrita — acesso por convite</div>
+        <div className="gate-body">
+          <div className="gate-title">Comunidade <span>STV</span></div>
+          <div className="gate-subtitle">STORIES QUE VENDEM</div>
+          <div className="gate-welcome">Bem-vindo à nossa comunidade! 💛<br/>Insira sua senha de acesso para continuar.</div>
+          <label className="gate-label">Sua senha de acesso:</label>
+          <input
+            className="gate-input"
+            type="password"
+            placeholder="••••••••"
+            value={pw}
+            onChange={(e) => setPw(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && login()}
+          />
+          {err && <div className="gate-err">⚠ {err}</div>}
+          <button className="gate-btn" onClick={login}>▶ Entrar na comunidade</button>
+          <div className="gate-foot">Comunidade STV © 2024 · Todos os direitos reservados</div>
         </div>
       </div>
     </div>
@@ -613,49 +589,39 @@ function AIGerarComunidade({ userData, onAplicar, onClose }) {
         (userData.seqs||[]).forEach(s=>(s.stories||[]).forEach(r=>{ if(r.mec) topMecs[r.mec]=(topMecs[r.mec]||0)+1; }));
         return Object.entries(topMecs).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([m])=>m);
       })();
-      const prompt=`Crie uma sequência de stories para um criador de conteúdo brasileiro.
+      const prompt=`Gere uma comunidade de stories completa com EXATAMENTE 15 recados para um criador de conteúdo brasileiro.
 
-DADOS:
+DADOS DA SEQUÊNCIA:
 - Tipo: ${form.tipo}
 - Nicho: ${userData.nicho||"não informado"}
-- Produto/Serviço: ${form.produto||"produto do criador"}
-- Objetivo: ${form.objetivo||"gerar vendas e engajamento"}
-- Dispositivos que este criador JÁ usa demais (evite repetir): ${mecsMaisUsados.join(", ")||"nenhum registrado"}
+- Produto/Serviço: ${form.produto||"produto do usuário"}
+- Objetivo: ${form.objetivo||"gerar vendas"}
+- Mecanismos que este usuário JÁ usa demais (EVITE ou use no máximo 1x): ${mecsMaisUsados.join(", ")||"nenhum"}
 
-SUA MISSÃO:
-Criar uma sequência que funciona de verdade — não um template preenchido, mas uma narrativa que prende, conecta e converte.
+INSTRUÇÕES CRÍTICAS:
+1. O campo "ideia" deve ser o ROTEIRO COMPLETO e pronto para postar — exatamente o texto que o criador vai escrever ou falar no story. Não uma descrição do que fazer. Escreva na 1ª pessoa, com a voz do criador, usando a linguagem do nicho.
+2. Cada story deve ser diferente em tom e abordagem — não repita a mesma estrutura.
+3. Stories 1-3: identifação + curiosidade + CTA imediato. Use urgência oculta específica do nicho.
+4. Stories 4-7: história pessoal, vulnerabilidade, conexão emocional profunda.
+5. Stories 8-12: conteúdo de valor + prova social (print de cliente, resultado real).
+6. Stories 13-15: condução suave para ação — o contexto já foi construído.
+7. VARIEDADE OBRIGATÓRIA: use no mínimo 10 mecanismos DIFERENTES nos 15 stories.
+8. Mecanismos a PRIORIZAR por serem menos usados: ${MECANISMOS.filter(m=>!mecsMaisUsados.includes(m.nome)).slice(0,8).map(m=>m.nome).join(", ")||"todos disponíveis"}
 
-SOBRE O TAMANHO:
-Decida você quantos stories essa sequência precisa. Uma sequência de engajamento puro pode ter 7 stories perfeitos. Uma sequência de venda de produto complexo pode precisar de 18. O critério é: cada story tem propósito claro e dispositivo com intensidade? Se sim, está certo. Se algum story está "de passagem", corte ele.
-
-SOBRE OS DISPOSITIVOS:
-Escolha os dispositivos pelos gatilhos que ativam, não pela facilidade. Priorize os pouco usados por este criador. Use pelo menos 5 dispositivos DIFERENTES. Dispositivo fraco = resultado zero. O mesmo dispositivo com intensidade = inbox explodindo.
-
-SOBRE O ROTEIRO:
-O campo "ideia" é o texto PRONTO para postar — não uma descrição do que fazer. Escreva na 1ª pessoa, com a voz do criador. Curto e poderoso: 2-4 frases por story. Sem linguagem de coach genérico. Sem "olá pessoal". Sem "hoje vou falar sobre". Comece pelo que arde.
-
-ESTRUTURA NARRATIVA que funciona (adapte ao seu objetivo):
-→ Abertura: enquete, dado provocativo ou situação de identificação que faz a pessoa parar e pensar "esse sou eu"
-→ Desenvolvimento: história pessoal, vulnerabilidade real, prints de inbox, desdobramento que faz a audiência querer saber o que vem a seguir
-→ Conteúdo/Prova: valor genuíno entregue + resultados reais de pessoas reais
-→ Conversão: a venda surge como solução óbvia para um problema que a audiência acabou de confessar que tem
-
-Mecanismos menos usados por este criador para priorizar: ${MECANISMOS.filter(m=>!mecsMaisUsados.includes(m.nome)).slice(0,8).map(m=>m.nome).join(", ")||"todos disponíveis — use variedade"}
-
-Responda SOMENTE com JSON válido:
+Responda SOMENTE com JSON válido neste formato:
 {
-  "nome": "nome que captura a essência emocional da sequência",
+  "nome": "nome criativo que captura a essência da sequência",
   "recados": [
     {
-      "mec": "nome exato do dispositivo da lista",
+      "mec": "nome exato do mecanismo da lista",
       "cta": "um dos CTAs válidos",
-      "ideia": "texto pronto para postar, na 1ª pessoa, voz do criador, 2-4 frases. Específico para o nicho '${userData.nicho||"informado"}'. Começa pelo que provoca — sem introduções."
+      "ideia": "ROTEIRO COMPLETO: texto pronto para postar, na voz do criador, 2-4 frases curtas e poderosas. Específico para o nicho '${userData.nicho||"informado"}'."
     }
   ]
 }
 
 CTAs válidos: ${CTAS.join(", ")}
-Obrigatório: 1º story com Enquete, Resposta Inbox ou Caixinha. Cada story com pelo menos 1 dispositivo. Nunca mais de 2 stories de venda seguidos.`;
+Regra de ouro: 1º story DEVE ter Resposta Inbox, Enquete ou Caixinha. O texto deve soar como uma pessoa real falando, não como um coach genérico.`;
 
       const txt=await callAI(sys,prompt);
       const data=parseJSON(txt);
@@ -941,7 +907,7 @@ function ComDetail({ com, setSeqs, prods, userData, onBack }) {
   const m5=st.filter(s=>s.mec).length;
   const c5=st.filter(s=>s.cta&&s.cta!=="Sem CTA").length;
   const f1ok=st[0]&&["Resposta Inbox","Enquete","Caixinha"].includes(st[0].cta);
-  const ok=m5>=5&&c5>=5&&st.length>=7&&f1ok;
+  const ok=m5>=5&&c5>=5&&st.length>=15&&f1ok;
   const sbm={Rascunho:"gz",Gravando:"y","No Ar":"g"};
   return (
     <div style={{padding:10}}>
@@ -969,7 +935,7 @@ function ComDetail({ com, setSeqs, prods, userData, onBack }) {
           )}
           {tab==="recados"&&(
             <div>
-              {!ok&&<div className="wb">⚠ <strong>Critérios não atingidos:</strong><ul>{!f1ok&&<li>1º story: Resposta Inbox, Enquete ou Caixinha</li>}{m5<5&&<li>Mínimo 5 mecanismos ({m5} agora)</li>}{c5<5&&<li>Mínimo 5 CTAs ({c5} agora)</li>}{st.length<5&&<li>Sequência muito curta ({st.length} stories — recomendado mínimo 7)</li>}</ul></div>}
+              {!ok&&<div className="wb">⚠ <strong>Critérios não atingidos:</strong><ul>{!f1ok&&<li>1º story: Resposta Inbox, Enquete ou Caixinha</li>}{m5<5&&<li>Mínimo 5 mecanismos ({m5} agora)</li>}{c5<5&&<li>Mínimo 5 CTAs ({c5} agora)</li>}{st.length<15&&<li>Mínimo 15 stories ({st.length} agora)</li>}</ul></div>}
               {ok&&<div className="ob">✔ Comunidade no padrão! Hora de publicar! 🚀</div>}
               <div style={{display:"flex",justifyContent:"flex-end",gap:6,marginBottom:7}}>
                 <button className="btn bgn" onClick={addR}>+ Novo story</button>
@@ -1128,7 +1094,7 @@ function Home({ seqs, prods, ideas, setPage, session, setData, userData }) {
         </div>
         <div className="box">
           <div className="bh or">📖 Critérios</div>
-          <div className="bb" style={{fontSize:11,lineHeight:1.7,color:"#444"}}><div>✔ 1º story: CTA engajamento</div><div>✔ Mínimo 5 mecanismos</div><div>✔ Mínimo 5 CTAs</div><div>✔ Mínimo 7 stories (sem teto — use o quanto a sequência precisar)</div></div>
+          <div className="bb" style={{fontSize:11,lineHeight:1.7,color:"#444"}}><div>✔ 1º story: CTA engajamento</div><div>✔ Mínimo 5 mecanismos</div><div>✔ Mínimo 5 CTAs</div><div>✔ Mínimo 15 stories</div></div>
         </div>
       </aside>
       <div className="ct">
