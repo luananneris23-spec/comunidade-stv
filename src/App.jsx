@@ -77,6 +77,7 @@ async function loadUserDataRemote(id) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ user_id: id })
     });
+    if(!res.ok) return null;
     const json = await res.json();
     return json.data || null;
   } catch { return null; }
@@ -705,6 +706,187 @@ Regra de ouro: 1º story DEVE ter Resposta Inbox, Enquete ou Caixinha.`;
 }
 
 // ─── IA MODAL — SUGERIR MECANISMO ────────────────────────────────────────────
+// ─── IA MODAL — CRIAÇÃO PERSONALIZADA ────────────────────────────────────────
+function AIGerarPersonalizado({ userData, onAplicar, onClose }) {
+  const [step,setStep]=useState(1); // 1=config, 2=dispositivos, 3=resultado
+  const [loading,setLoading]=useState(false);
+  const [result,setResult]=useState(null);
+  const [erro,setErro]=useState("");
+  const [form,setForm]=useState({tema:"",produto:"",objetivo:"",tipo:TIPOS_COM[0]});
+  const [dispSel,setDispSel]=useState(new Set());
+
+  const toggleDisp=(id)=>{
+    setDispSel(prev=>{
+      const n=new Set(prev);
+      if(n.has(id)) n.delete(id); else n.add(id);
+      return n;
+    });
+  };
+
+  // Group devices by category for display
+  const mecsPorCat = CATS ? Object.entries(CATS).map(([cat,info])=>({
+    cat, info,
+    mecs: MECANISMOS.filter(m=>m.cat===cat)
+  })).filter(g=>g.mecs.length>0) : [];
+
+  const gerar=async()=>{
+    if(!form.tema.trim()){setErro("Preencha o tema principal.");return;}
+    if(dispSel.size<2){setErro("Selecione pelo menos 2 dispositivos.");return;}
+    setLoading(true);setErro("");setResult(null);
+    try {
+      const sys=buildSystemPrompt(userData);
+      const dispEscolhidos=MECANISMOS.filter(m=>dispSel.has(m.id)).map(m=>m.nome);
+      const prompt=`Gere uma sequência de stories PERSONALIZADA usando APENAS os dispositivos escolhidos pela usuária.
+
+DADOS:
+- Tipo: ${form.tipo}
+- Tema principal: ${form.tema}
+- Produto/Serviço: ${form.produto||"produto do usuário"}
+- Objetivo: ${form.objetivo||"gerar engajamento e vendas"}
+- Nicho: ${userData.nicho||"não informado"}
+
+DISPOSITIVOS ESCOLHIDOS (use APENAS estes, na ordem que fizer mais sentido narrativo):
+${dispEscolhidos.map((d,i)=>`${i+1}. ${d}`).join("\n")}
+
+REGRAS CRÍTICAS:
+1. Use SOMENTE os dispositivos listados acima — nenhum outro
+2. Cada dispositivo escolhido deve aparecer pelo menos uma vez na sequência
+3. O campo "ideia" é o roteiro COMPLETO pronto para postar — 2-4 frases na voz do criador
+4. 1º story DEVE ter CTA de engajamento (Inbox, Enquete ou Caixinha)
+5. Ordene os dispositivos de forma que a sequência tenha arco narrativo: gancho → conexão → valor → ação
+6. Adapte tudo ao nicho "${userData.nicho||"do usuário"}" e ao tema "${form.tema}"
+
+Responda SOMENTE com JSON:
+{
+  "nome": "nome criativo para a sequência baseado no tema",
+  "recados": [
+    {
+      "mec": "nome exato do dispositivo",
+      "cta": "um dos CTAs válidos",
+      "ideia": "roteiro completo, voz do criador, pronto para postar"
+    }
+  ]
+}
+
+CTAs válidos: ${CTAS.join(", ")}`;
+
+      const txt=await callAI(sys,prompt,userData.userId);
+      const data=parseJSON(txt);
+      if(!data||!data.recados) throw new Error("Resposta inválida da IA");
+      setResult(data);
+      setStep(3);
+    } catch(e){setErro("Erro ao gerar. Tente novamente. "+e.message);}
+    setLoading(false);
+  };
+
+  return (
+    <div className="mo" onClick={e=>e.target===e.currentTarget&&onClose()}>
+      <div className="md wide">
+        <div className="mh ai">✨ Criação Personalizada <button className="btn bw bsm" onClick={onClose}>✕</button></div>
+        <div className="mb">
+          {step===1&&(
+            <>
+              <div className="aib" style={{background:"linear-gradient(135deg,#fff3e0,#fce4ec)",border:"1px solid #ffcc80"}}>
+                ✨ Escolha o tema, defina o objetivo e selecione os dispositivos que quer usar. A IA cria a sequência com EXATAMENTE esses dispositivos.
+              </div>
+              <div className="fg"><label className="fl">Tipo da comunidade</label><select className="fs" value={form.tipo} onChange={e=>setForm(f=>({...f,tipo:e.target.value}))}>{TIPOS_COM.map(t=><option key={t}>{t}</option>)}</select></div>
+              <div className="fg"><label className="fl">Tema principal *</label><input className="fi" placeholder="Ex: ansiedade no trabalho, como montar uma mesa posta, segredos do relacionamento..." value={form.tema} onChange={e=>setForm(f=>({...f,tema:e.target.value}))}/></div>
+              <div className="fg"><label className="fl">Produto ou serviço (opcional)</label><input className="fi" placeholder="Ex: Mentoria de tráfego, Curso de confeitaria..." value={form.produto} onChange={e=>setForm(f=>({...f,produto:e.target.value}))}/></div>
+              <div className="fg"><label className="fl">Objetivo principal (opcional)</label><input className="fi" placeholder="Ex: Gerar inbox qualificados, vender ingresso..." value={form.objetivo} onChange={e=>setForm(f=>({...f,objetivo:e.target.value}))}/></div>
+              {erro&&<div style={{color:"#cc2222",fontSize:11,marginBottom:8}}>⚠ {erro}</div>}
+              <div style={{display:"flex",gap:5,justifyContent:"flex-end"}}>
+                <button className="btn bw" onClick={onClose}>Cancelar</button>
+                <button className="btn bai" onClick={()=>{if(!form.tema.trim()){setErro("Preencha o tema principal.");return;}setErro("");setStep(2);}}>Próximo: escolher dispositivos →</button>
+              </div>
+            </>
+          )}
+          {step===2&&(
+            <>
+              <div style={{fontSize:12,color:"#555",marginBottom:10}}>
+                <strong>Tema:</strong> {form.tema} · <strong>Tipo:</strong> {form.tipo}
+                <span style={{float:"right",color:dispSel.size>=2?"#228822":"#aa4400",fontWeight:"bold"}}>{dispSel.size} selecionado{dispSel.size!==1?"s":""} {dispSel.size>=2?"✓":"(mínimo 2)"}</span>
+              </div>
+              <div style={{maxHeight:400,overflowY:"auto",paddingRight:4}}>
+                {mecsPorCat.map(({cat,info,mecs})=>(
+                  <div key={cat} style={{marginBottom:14}}>
+                    <div style={{fontSize:11,fontWeight:"bold",color:info.color,textTransform:"uppercase",letterSpacing:0.5,marginBottom:5,paddingBottom:3,borderBottom:`1px solid ${info.color}33`}}>
+                      {info.emoji} {info.label}
+                    </div>
+                    <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
+                      {mecs.map(m=>{
+                        const sel=dispSel.has(m.id);
+                        return (
+                          <div key={m.id}
+                            onClick={()=>toggleDisp(m.id)}
+                            title={m.desc}
+                            style={{
+                              padding:"5px 10px",
+                              borderRadius:4,
+                              border:`1.5px solid ${sel?info.color:"#ddd"}`,
+                              background:sel?info.color+"18":"#fafafa",
+                              color:sel?info.color:"#444",
+                              fontSize:11,
+                              fontWeight:sel?"bold":"normal",
+                              cursor:"pointer",
+                              transition:"all 0.15s",
+                              userSelect:"none",
+                              display:"flex",
+                              alignItems:"center",
+                              gap:4
+                            }}
+                          >
+                            {sel&&<span style={{color:info.color}}>✓</span>}
+                            {m.nome}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {erro&&<div style={{color:"#cc2222",fontSize:11,marginTop:8}}>⚠ {erro}</div>}
+              {loading&&<div className="ailoading"><span className="spin">⚙</span> Gerando sequência personalizada... aguarde</div>}
+              <div style={{display:"flex",gap:5,justifyContent:"flex-end",marginTop:10}}>
+                <button className="btn bw" onClick={()=>setStep(1)}>← Voltar</button>
+                <button className="btn bai" disabled={loading} onClick={gerar}>
+                  ✨ {loading?"Gerando...":"Gerar com esses dispositivos"}
+                </button>
+              </div>
+            </>
+          )}
+          {step===3&&result&&(
+            <>
+              <div className="ob">✔ Sequência personalizada gerada com {result.recados.length} stories usando os dispositivos que você escolheu!</div>
+              <div style={{maxHeight:380,overflowY:"auto",marginBottom:12}}>
+                {result.recados.map((r,i)=>{
+                  const mec=MECANISMOS.find(m=>m.nome===r.mec);
+                  const catInfo=mec?CATS[mec.cat]:null;
+                  return (
+                    <div key={i} style={{display:"flex",gap:8,padding:"6px 0",borderBottom:"1px solid #eee",fontSize:11}}>
+                      <div style={{width:22,height:22,background:"linear-gradient(180deg,#E85500,#B03800)",color:"#fff",borderRadius:3,display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,fontWeight:"bold",flexShrink:0}}>{i+1}</div>
+                      <div style={{flex:1}}>
+                        <div style={{display:"flex",gap:6,alignItems:"center",flexWrap:"wrap",marginBottom:2}}>
+                          <span style={{color:catInfo?.color||"#9922cc",fontWeight:"bold"}}>{r.mec}</span>
+                          <span style={{background:"#f0f0f0",borderRadius:2,padding:"1px 5px",color:"#555"}}>{r.cta}</span>
+                        </div>
+                        <div style={{color:"#333",lineHeight:1.5}}>{r.ideia}</div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div style={{display:"flex",gap:5,justifyContent:"flex-end"}}>
+                <button className="btn bw" onClick={()=>setStep(2)}>← Refazer</button>
+                <button className="btn bgn" onClick={()=>onAplicar(result)}>✔ Aplicar essa sequência</button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function AISugerirMecanismo({ userData, storyIndex, storyIdeia, onAplicar, onClose }) {
   const [loading,setLoading]=useState(false);
   const [sugestoes,setSugestoes]=useState([]);
@@ -990,11 +1172,12 @@ function Comunidades({ seqs, setSeqs, prods, userData }) {
   const [show,setShow]=useState(false);
   const [det,setDet]=useState(null);
   const [aiModal,setAiModal]=useState(false);
+  const [aiPersonModal,setAiPersonModal]=useState(false);
   const [form,setForm]=useState({nome:"",tipo:"",cadencia:""});
   const cr=()=>{if(!form.nome.trim())return;const n={id:uid(),...form,status:"Rascunho",stories:[]};setSeqs(x=>[...x,n]);setForm({nome:"",tipo:"",cadencia:""});setShow(false);setDet(n.id);};
   const aplicarIA=result=>{
     const n={id:uid(),nome:result.nome,tipo:form.tipo||TIPOS_COM[0],status:"Rascunho",stories:result.recados.map(r=>({id:uid(),mec:r.mec,cta:r.cta,ideia:r.ideia}))};
-    setSeqs(x=>[...x,n]);setAiModal(false);setDet(n.id);
+    setSeqs(x=>[...x,n]);setAiModal(false);setAiPersonModal(false);setDet(n.id);
   };
   if(det){const s=seqs.find(x=>x.id===det);if(!s){setDet(null);return null;}return <ComDetail com={s} setSeqs={setSeqs} prods={prods} userData={userData} onBack={()=>setDet(null)}/>;}
   const sbm={Rascunho:"gz",Gravando:"y","No Ar":"g"};
@@ -1004,6 +1187,7 @@ function Comunidades({ seqs, setSeqs, prods, userData }) {
         <div className="bh">📱 Minhas Sequências de Stories
           <div style={{display:"flex",gap:5}}>
             <button className="btn bai bsm" onClick={()=>setAiModal(true)}>🤖 Gerar com IA</button>
+            <button className="btn bsm" style={{background:"linear-gradient(135deg,#E85500,#B03800)",color:"#fff",border:"none",borderRadius:3,cursor:"pointer",padding:"4px 10px",fontFamily:"inherit"}} onClick={()=>setAiPersonModal(true)}>✨ Criação Personalizada</button>
             <button className="btn bgn bsm" onClick={()=>setShow(true)}>+ nova</button>
           </div>
         </div>
@@ -1014,6 +1198,7 @@ function Comunidades({ seqs, setSeqs, prods, userData }) {
       </div>
       {show&&(<div className="mo" onClick={e=>e.target===e.currentTarget&&setShow(false)}><div className="md"><div className="mh">📱 Nova comunidade <button className="btn bw bsm" onClick={()=>setShow(false)}>✕</button></div><div className="mb"><div className="fg"><label className="fl">Nome *</label><input className="fi" placeholder="Ex: Lançamento de março" value={form.nome} onChange={e=>setForm(f=>({...f,nome:e.target.value}))}/></div><div className="fr"><div className="fg"><label className="fl">Tipo</label><select className="fs" value={form.tipo} onChange={e=>setForm(f=>({...f,tipo:e.target.value}))}><option value="">-- selecione --</option>{TIPOS_COM.map(t=><option key={t}>{t}</option>)}</select></div><div className="fg"><label className="fl">Cadência</label><select className="fs" value={form.cadencia} onChange={e=>setForm(f=>({...f,cadencia:e.target.value}))}><option value="">-- selecione --</option><option>Alta</option><option>Baixa</option></select></div></div><div style={{display:"flex",gap:5,justifyContent:"flex-end"}}><button className="btn bw" onClick={()=>setShow(false)}>Cancelar</button><button className="btn bo" onClick={cr}>Criar ▶</button></div></div></div></div>)}
       {aiModal&&<AIGerarComunidade userData={userData} onAplicar={aplicarIA} onClose={()=>setAiModal(false)}/>}
+      {aiPersonModal&&<AIGerarPersonalizado userData={userData} onAplicar={aplicarIA} onClose={()=>setAiPersonModal(false)}/>}
     </div>
   );
 }
@@ -1189,13 +1374,16 @@ function UserApp({ session, onLogout }) {
 
   // Carrega dados do Supabase ao entrar
   useEffect(()=>{
-    loadUserDataRemote(session.userId).then(remote=>{
-      if(remote){
-        setDataRaw({seqs:[],prods:[],ideas:[],nicho:"",...remote});
-        saveUserDataLocal(session.userId,remote);
-      }
-      setSyncing(false);
-    });
+    const timeout = setTimeout(()=>setSyncing(false), 5000); // fallback 5s
+    loadUserDataRemote(session.userId)
+      .then(remote=>{
+        if(remote){
+          setDataRaw({seqs:[],prods:[],ideas:[],nicho:"",...remote});
+          saveUserDataLocal(session.userId,remote);
+        }
+      })
+      .catch(()=>{})
+      .finally(()=>{ clearTimeout(timeout); setSyncing(false); });
   },[]);
 
   const setData=fn=>{setDataRaw(prev=>{
